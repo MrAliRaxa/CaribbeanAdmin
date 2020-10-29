@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activities.AddNewCountry"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:layout_margin="@dimen/_10sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="7dp"
+                android:layout_margin="@dimen/_10sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Country Name"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_name"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Motto"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_motto"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Language"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_Language"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Capital"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_capital"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Population"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_population"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"
+                            android:inputType="numberDecimal"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temperature"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_temperature"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"
+                            android:inputType="numberDecimal"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Currency"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_currency"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="50dp"
+                            android:inputType="numberDecimal"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="History"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            />
+                        <EditText
+                            android:layout_margin="@dimen/_10sdp"
+                            android:id="@+id/addNewCountry_history"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/light_gray_bg"
+                            android:layout_height="150dp"/>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/saveContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="Save Content"
+                        android:backgroundTint="@android:color/holo_red_dark"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardElevation="@dimen/_7sdp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Slider Content Type"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        />
+                    <Spinner
+                        android:id="@+id/addNewCountry_sliderSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:entries="@array/countrySlider"
+                        android:background="@drawable/light_gray_bg"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/addNewCountry_sliderImagesLayout"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Images Selected"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/addNewCountry_selectedImagesText"
+                            />
+
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Add Slider Images"
+                            android:id="@+id/addNewCountry_addSliderImages"
+                            />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Save Slider Image"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:id="@+id/addNewCountry_addSliderImagesPublish"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        android:id="@+id/addNewCountry_sliderVideosLayout"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Videos Selected"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/addNewCountry_selectedVideosText"
+                            />
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="Add Video"
+                            android:id="@+id/addNewCountry_addSliderVideos"
+                            />
+                        />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Save Slider Video"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:id="@+id/addNewCountry_addSliderVideoPublish"
+                            />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                app:cardElevation="@dimen/_7sdp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Flag"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Image Selected"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/addNewCountry_selectedFlagText"
+                            />
+
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="Add Flag Image"
+                            android:id="@+id/addNewCountry_addFlag"
+                            />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="Save Flag Image"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:id="@+id/addNewCountry_addFlagPublish"
+                            />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                app:cardElevation="@dimen/_7sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_10sdp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Coat of Arm "
+                        android:textSize="18sp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Image Selected"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/addNewCountry_selectedAramText"
+                            />
+
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="Add Arms Image"
+                            android:id="@+id/addNewCountry_addArmFlag"
+                            />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="Save Arms Image"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:id="@+id/addNewCountry_addArmFlagPublish"
+                            />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delicacies Content Type"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        />
+                    <Spinner
+                        android:id="@+id/addNewCountry_dalicaciesSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:entries="@array/countrySlider"
+                        android:background="@drawable/light_gray_bg"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/addNewCountry_delicaciesImagesLayout"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Images Selected"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/addNewCountry_selectedDelicaciesImagesText"
+                            />
+
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Add Delicacies Images"
+                            android:id="@+id/addNewCountry_addDelicaciesImages"
+                            />
+                        />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Save Delicacies Images"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:id="@+id/addNewCountry_addDelicaciesImagesPublish"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:id="@+id/addNewCountry_dalicaciesVideosLayout"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Videos Selected"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/addNewCountry_selectedDelicaciesVideosText"
+
+                            />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Add Delicacies Video"
+                            android:id="@+id/addNewCountry_delicaciesVideos"
+                            />
+                        <Button
+                            android:layout_width="200dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Add Delicacies Video"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:id="@+id/addNewCountry_delicaciesVideosPublish"
+                            />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <Button
+                android:id="@+id/addNewCountry_finsh"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Finish"
+                android:backgroundTint="@android:color/holo_green_dark"/>
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
