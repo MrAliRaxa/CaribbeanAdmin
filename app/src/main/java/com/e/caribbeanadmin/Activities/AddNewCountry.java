@@ -164,6 +164,7 @@ public class AddNewCountry extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             i[0]++;
 
+
                             if(i[0] ==sliderContent.size())
                             {
                                 dialog.dismiss();
