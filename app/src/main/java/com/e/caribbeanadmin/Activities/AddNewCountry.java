@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,17 +23,13 @@ import android.widget.Toast;
 
 import com.e.caribbeanadmin.Constants.SliderType;
 import com.e.caribbeanadmin.DataModel.Country;
-import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
-import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
 import com.e.caribbeanadmin.Listeners.OnFileUploadListeners;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.databinding.ActivityAddNewCountryBinding;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
@@ -59,15 +57,15 @@ public class AddNewCountry extends AppCompatActivity {
 
 
     private List<Uri> sliderContent;
+    private List<String> sliderContentDownloadUrl;
     private List<Uri> delicaciesContent;
+    private List<String> delicaciesContentDownloadUrl;
     private Uri flagUri;
     private Uri armsFlagUri;
     private Country country;
 
-    private boolean isSliderContentUploaded;
-    private boolean isDelicaciesContentUploaded;
-    private boolean isFlagUploaded;
-    private boolean isArmFlagUploaded;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +73,15 @@ public class AddNewCountry extends AppCompatActivity {
         country=new Country();
         sliderContent=new ArrayList<>();
         delicaciesContent=new ArrayList<>();
+        sliderContentDownloadUrl=new ArrayList<>();
+        delicaciesContentDownloadUrl=new ArrayList<>();
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setCanceledOnTouchOutside(false);
+        selectedFlagText=mDataBinding.addNewCountrySelectedFlagText;
+        selectedArmFlagText=mDataBinding.addNewCountrySelectedAramText;
+        selectedDelicaciesImageText=mDataBinding.addNewCountrySelectedDelicaciesImagesText;
+        selectedDelicaciesVideoText=mDataBinding.addNewCountrySelectedDelicaciesVideosText;
 
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(AddNewCountry.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
@@ -104,95 +111,25 @@ public class AddNewCountry extends AppCompatActivity {
 
             }
         });
-        AlertDialog dialog=new AlertDialog.Builder(AddNewCountry.this).create();
-        dialog.setTitle("Loading . . .");
-        dialog.setMessage(" ");
-        dialog.setCanceledOnTouchOutside(false);
-        mDataBinding.saveContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                country.getInformation().setName(mDataBinding.addNewCountryName.getText().toString());
-                country.getInformation().setMotto(mDataBinding.addNewCountryMotto.getText().toString());
-                country.getInformation().setLanguage(mDataBinding.addNewCountryLanguage.getText().toString());
-                country.getInformation().setCapital(mDataBinding.addNewCountryCapital.getText().toString());
-                country.getInformation().setTemperature(Double.parseDouble(mDataBinding.addNewCountryTemperature.getText().toString()));
-                country.getInformation().setCurrencyName(mDataBinding.addNewCountryCurrency.getText().toString());
-                country.setHistory(mDataBinding.addNewCountryHistory.getText().toString());
-                country.getInformation().setPopulation(Integer.parseInt(mDataBinding.addNewCountryPopulation.getText().toString()));
-                country.setCountryId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
 
 
-                dialog.show();
-
-                DatabaseUploader.saveCountryContent(country, new OnTaskCompleteListeners() {
-                    @Override
-                    public void onTaskSuccess() {
-                        Toast.makeText(AddNewCountry.this, "Data Saved", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onTaskFail(String e) {
-                        Toast.makeText(AddNewCountry.this, "Fail to Save data", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-
-
-            }
-        });
 
         mDataBinding.addNewCountryAddSliderImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                getVideos(SELECT_SLIDER_IMAGE_CODE);
+                country.getCountrySlider().setSliderType(SliderType.IMAGE_SLIDER);
+                getImages(SELECT_SLIDER_IMAGE_CODE);
 
             }
         });
 
-        mDataBinding.addNewCountryAddSliderImagesPublish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int[] i = {0};
-                if(sliderContent.size()>0){
-                    dialog.show();
-                    FireStoreUploader.uploadPhotos(sliderContent, country.getCountryId(), new OnFileUploadListeners() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            i[0]++;
-
-
-                            if(i[0] ==sliderContent.size())
-                            {
-                                dialog.dismiss();
-                                Toast.makeText(AddNewCountry.this, "Image is saved", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            dialog.setTitle("Remaining "+i[0]+"/"+sliderContent.size()+"  "+taskSnapshot.getBytesTransferred()/1024);
-                        }
-
-                        @Override
-                        public void onFailure(String e) {
-                            dialog.dismiss();
-                        }
-                    });
-                }else {
-                    Toast.makeText(AddNewCountry.this, "Please Select Images", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         mDataBinding.addNewCountryAddSliderVideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                country.getCountrySlider().setSliderType(SliderType.VIDEO);
                 getVideos(SELECT_SLIDER_VIDEO_CODE);
             }
         });
@@ -236,6 +173,7 @@ public class AddNewCountry extends AppCompatActivity {
         mDataBinding.addNewCountryAddDelicaciesImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                country.getDelicacies().setSliderType(SliderType.IMAGE_SLIDER);
                 getImages(SELECT_DELICACIES_IMAGE_CODE);
             }
         });
@@ -243,84 +181,224 @@ public class AddNewCountry extends AppCompatActivity {
         mDataBinding.addNewCountryDelicaciesVideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                country.getDelicacies().setSliderType(SliderType.VIDEO);
                 getVideos(SELECT_DELICACIES_VIDEO_CODE);
             }
         });
 
-//        mDataBinding.uploadData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//
+
+        mDataBinding.addNewCountryFinsh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final int[] sliderContentCounter = {0};
+
+                if(mDataBinding.addNewCountryName.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryName.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryName.requestFocus();
+                    return;
+                }else if(mDataBinding.addNewCountryMotto.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryMotto.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryMotto.requestFocus();
+
+                    return;
+
+                }else if(mDataBinding.addNewCountryLanguage.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryLanguage.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryLanguage.requestFocus();
+
+                    return;
+
+                }else if(mDataBinding.addNewCountryCapital.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryCapital.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryCapital.requestFocus();
+
+                    return;
+
+                }else if(mDataBinding.addNewCountryTemperature.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryTemperature.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryTemperature.requestFocus();
+
+                    return;
+                }else if(mDataBinding.addNewCountryCurrency.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryCurrency.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryCurrency.requestFocus();
+
+                    return;
+                }else if(mDataBinding.addNewCountryHistory.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryHistory.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryHistory.requestFocus();
+                    return;
+                }else if(mDataBinding.addNewCountryExtraContent.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryExtraContent.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryExtraContent.requestFocus();
+                    return;
+                }else if(mDataBinding.addNewCountryDelicaciesContent.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryDelicaciesContent.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryDelicaciesContent.requestFocus();
+                    return;
+                }
 
 
+                country.getInformation().setName(mDataBinding.addNewCountryName.getText().toString());
+                country.getInformation().setMotto(mDataBinding.addNewCountryMotto.getText().toString());
+                country.getInformation().setLanguage(mDataBinding.addNewCountryLanguage.getText().toString());
+                country.getInformation().setCapital(mDataBinding.addNewCountryCapital.getText().toString());
+                country.getInformation().setTemperature(Double.parseDouble(mDataBinding.addNewCountryTemperature.getText().toString()));
+                country.getInformation().setCurrencyName(mDataBinding.addNewCountryCurrency.getText().toString());
+                country.setHistory(mDataBinding.addNewCountryHistory.getText().toString());
+                country.getInformation().setPopulation(Integer.parseInt(mDataBinding.addNewCountryPopulation.getText().toString()));
+                country.setCountryId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
 
-//                if(sliderImagesUrl.size()>0){
-//
-//                    final int[] totalFiles={0};
-//                    final int[] currentStatusFile={0};
-//
-//                    final long[] totalUploadSize = {0};
-//                    final int[] currentUploadingSize = {0};
-//
-//
-//                    List<String> downloadAbleUrls=new ArrayList<>();
-//                    totalFiles[0]=sliderImagesUrl.size();
-//
-//
-//
-//
-//                    for(Uri url:sliderImagesUrl){
-//
-//                        FireStorageAddresses.getSliderImageRef(country.getCountryId()).child(url.getLastPathSegment()).putFile(url)
-//                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                    @Override
-//                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                        taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                            @Override
-//                                            public void onSuccess(Uri uri) {
-//                                                downloadAbleUrls.add(String.valueOf(uri));
-//                                                if(currentStatusFile[0]==totalFiles[0]){
-//                                                    Log.d(TAG, "onSuccess: finished");
-//                                                    dialog.setMessage("Uploading... Country information ");
-//                                                    country.getCountrySlider().setImages(downloadAbleUrls);
-//                                                    DatabaseAddresses.getCountriesCollection(country.getCountryId()).set(country)
-//                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                                @Override
-//                                                                public void onSuccess(Void aVoid) {
-//                                                                    dialog.dismiss();
-//                                                                }
-//                                                            }).addOnFailureListener(new OnFailureListener() {
-//                                                        @Override
-//                                                        public void onFailure(@NonNull Exception e) {
-//                                                            Toast.makeText(AddNewCountry.this, "Fail to upload", Toast.LENGTH_SHORT).show();
-//                                                        }
-//                                                    });
-//                                                }
-//                                            }
-//                                        });
-//
-//                                        currentStatusFile[0] +=1;
-//                                        Log.d(TAG, "onSuccess: "+currentStatusFile[0]+"/"+totalFiles[0]);
-//                                        dialog.setMessage(" Uploading "+currentStatusFile[0]+"/"+totalFiles[0]+"   "+currentUploadingSize[0]+"KB"+"\n");
-//
-//                                    }
-//                                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-//                                currentUploadingSize[0]+=snapshot.getBytesTransferred()/1024;
-//                                dialog.setMessage(" Uploading "+currentStatusFile[0]+"/"+totalFiles[0]+"   "+currentUploadingSize[0]+"KB"+"\n");
-//
-//                            }
-//                        });
-//                    }
-//                }else{
-//                    Log.d(TAG, "onClick: no image selected");
-//                }
-//            }
-//        });
+                progressDialog.show();
+                progressDialog.setMessage("Uploading country images");
+                FireStoreUploader.uploadPhotos(sliderContent, country.getCountryId(), new OnFileUploadListeners() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                sliderContentDownloadUrl.add(String.valueOf(uri));
+                                sliderContentCounter[0]++;
+                                Log.d(TAG, "onSuccess: slider content "+sliderContentCounter[0]);
+                                if(sliderContentCounter[0] >=sliderContent.size()){
+                                    Log.d(TAG, "onSuccess: slider content done");
+
+                                    final int[] delicaciesContentCounter = {0};
+                                    progressDialog.setMessage("Uploading delicacies images");
+
+                                    FireStoreUploader.uploadPhotos(delicaciesContent, country.getCountryId(), new OnFileUploadListeners() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    delicaciesContentDownloadUrl.add(uri.toString());
+                                                    delicaciesContentCounter[0]++;
+                                                    Log.d(TAG, "onSuccess: delicacies content "+delicaciesContentCounter[0]);
+
+                                                    if(delicaciesContentCounter[0] >=delicaciesContent.size()){
+                                                        Log.d(TAG, "onSuccess: delicacies content done ");
+                                                        Log.d(TAG, "onSuccess: flag content start ");
+                                                        progressDialog.setMessage("Uploading flag image");
+
+                                                        FireStoreUploader.uploadPhotos(flagUri, country.getCountryId(), new OnFileUploadListeners() {
+                                                            @Override
+                                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                                    @Override
+                                                                    public void onSuccess(Uri uri) {
+                                                                        Log.d(TAG, "onSuccess: flag content done ");
+                                                                        Log.d(TAG, "onSuccess: arm flag content start ");
+                                                                        progressDialog.setMessage("Uploading Arms Flag images");
+
+                                                                        country.setFlagImageUrl(uri.toString());
+
+                                                                        FireStoreUploader.uploadPhotos(armsFlagUri, country.getCountryId(), new OnFileUploadListeners() {
+                                                                            @Override
+                                                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(Uri uri) {
+                                                                                        Log.d(TAG, "onSuccess: arm flag content done ");
+                                                                                        progressDialog.setMessage("Uploading Country Information");
+
+                                                                                        country.setArmFlagUrl(uri.toString());
+                                                                                        country.getCountrySlider().setSliderContent(sliderContentDownloadUrl);
+                                                                                        country.getDelicacies().setSliderContent(delicaciesContentDownloadUrl);
+
+                                                                                        DatabaseUploader.saveCountryContent(country, new OnTaskCompleteListeners() {
+                                                                                            @Override
+                                                                                            public void onTaskSuccess() {
+                                                                                                Log.d(TAG, "onTaskSuccess: data uploaded");
+                                                                                                progressDialog.dismiss();
+                                                                                                AlertDialog dialog=new AlertDialog.Builder(AddNewCountry.this)
+                                                                                                        .setTitle("Message")
+                                                                                                        .setMessage("Country Added Succesfully")
+                                                                                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                                                                            @Override
+                                                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                                                finish();
+                                                                                                            }
+                                                                                                        }).create();
+                                                                                                dialog.show();
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onTaskFail(String e) {
+
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                });
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onFailure(String e) {
+
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                });
+                                                            }
+
+                                                            @Override
+                                                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(String e) {
+
+                                                            }
+                                                        });
+
+                                                    }
+                                                }
+                                            });
+
+                                        }
+
+                                        @Override
+                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(String e) {
+
+                                        }
+                                    });
+
+                                }
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onFailure(String e) {
+
+                    }
+                });
+
+            }
+        });
+
+
 
     }
 

@@ -9,6 +9,16 @@ public class CountryInformation{
     private String capital;
     private double temperature;
     private String currencyName;
+    private String extraInformation;
+
+
+    public String getExtraInformation() {
+        return extraInformation;
+    }
+
+    public void setExtraInformation(String extraInformation) {
+        this.extraInformation = extraInformation;
+    }
 
     public String getName() {
         return name;

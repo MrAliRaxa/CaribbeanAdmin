@@ -16,7 +16,7 @@ public class FireStoreUploader {
     public static void uploadPhotos(Uri uri,String countryId, OnFileUploadListeners onFileUploadListeners){
 
 
-            FireStorageAddresses.getSliderImageRef(countryId).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            FireStorageAddresses.getSliderImageRef(countryId).child(uri.getLastPathSegment()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     onFileUploadListeners.onSuccess(taskSnapshot);
@@ -39,7 +39,7 @@ public class FireStoreUploader {
 
 
         for(Uri uri:uriList){
-            FireStorageAddresses.getSliderImageRef(countryId).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            FireStorageAddresses.getSliderImageRef(countryId).child(uri.getLastPathSegment()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     onFileUploadListeners.onSuccess(taskSnapshot);
@@ -62,7 +62,7 @@ public class FireStoreUploader {
     public static void uploadVideos(Uri uri,String countryId, OnFileUploadListeners onFileUploadListeners){
 
 
-            FireStorageAddresses.getSliderVideoRef(countryId).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            FireStorageAddresses.getSliderVideoRef(countryId).child(uri.getLastPathSegment()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     onFileUploadListeners.onSuccess(taskSnapshot);

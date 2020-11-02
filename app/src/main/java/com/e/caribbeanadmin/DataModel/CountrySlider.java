@@ -5,31 +5,24 @@ import java.util.List;
 
 public class CountrySlider {
 
-    private List<String> images;
-    private String videos;
+    private List<String> sliderContent;
     private int sliderType;
 
     public CountrySlider() {
 
-        images=new ArrayList<>();
+        sliderContent =new ArrayList<>();
 
     }
 
-    public List<String> getImages() {
-        return images;
+    public List<String> getSliderContent() {
+        return sliderContent;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setSliderContent(List<String> sliderContent) {
+        this.sliderContent = sliderContent;
     }
 
-    public String getVideos() {
-        return videos;
-    }
 
-    public void setVideos(String videos) {
-        this.videos = videos;
-    }
 
     public int getSliderType() {
         return sliderType;

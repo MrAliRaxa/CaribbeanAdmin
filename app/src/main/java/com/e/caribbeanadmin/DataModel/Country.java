@@ -8,15 +8,31 @@ public class Country {
     private CountrySlider countrySlider;
     private String history;
     private Delicacies delicacies;
+    private ReligionAndCulture religionAndCulture;
     private String countryId;
     private String flagImageUrl;
+    private String armFlagUrl;
 
     public Country() {
         information=new CountryInformation();
         countrySlider =new CountrySlider();
         delicacies=new Delicacies();
+        religionAndCulture=new ReligionAndCulture();
     }
 
+
+    public ReligionAndCulture getReligionAndCulture() {
+        return religionAndCulture;
+    }
+
+
+    public String getArmFlagUrl() {
+        return armFlagUrl;
+    }
+
+    public void setArmFlagUrl(String armFlagUrl) {
+        this.armFlagUrl = armFlagUrl;
+    }
 
     public String getFlagImageUrl() {
         return flagImageUrl;
