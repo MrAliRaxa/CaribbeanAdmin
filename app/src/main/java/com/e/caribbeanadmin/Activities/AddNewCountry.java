@@ -46,6 +46,9 @@ public class AddNewCountry extends AppCompatActivity {
     private static final int SELECT_ARM_IMAGE_CODE=4;
     private static final int SELECT_DELICACIES_IMAGE_CODE=5;
     private static final int SELECT_DELICACIES_VIDEO_CODE=6;
+    private static final int SELECT_RELIGION_CULTURE_IMAGE_CODE=7;
+    private static final int SELECT_RELIGION_CULTURE_VIDEO_CODE=8;
+
 
 
     private TextView selectedSliderImageText;
@@ -54,12 +57,16 @@ public class AddNewCountry extends AppCompatActivity {
     private TextView selectedArmFlagText;
     private TextView selectedDelicaciesImageText;
     private TextView selectedDelicaciesVideoText;
+    private TextView selectedReligionImageText;
+    private TextView selectedReligionVideoText;
 
 
     private List<Uri> sliderContent;
     private List<String> sliderContentDownloadUrl;
     private List<Uri> delicaciesContent;
     private List<String> delicaciesContentDownloadUrl;
+    private List<Uri> religionAndCultureContent;
+    private List<String> religionAndCultureContentDownloadUrl;
     private Uri flagUri;
     private Uri armsFlagUri;
     private Country country;
@@ -75,13 +82,10 @@ public class AddNewCountry extends AppCompatActivity {
         delicaciesContent=new ArrayList<>();
         sliderContentDownloadUrl=new ArrayList<>();
         delicaciesContentDownloadUrl=new ArrayList<>();
-        progressDialog=new ProgressDialog(this);
-        progressDialog.setTitle("Loading");
-        progressDialog.setCanceledOnTouchOutside(false);
-        selectedFlagText=mDataBinding.addNewCountrySelectedFlagText;
-        selectedArmFlagText=mDataBinding.addNewCountrySelectedAramText;
-        selectedDelicaciesImageText=mDataBinding.addNewCountrySelectedDelicaciesImagesText;
-        selectedDelicaciesVideoText=mDataBinding.addNewCountrySelectedDelicaciesVideosText;
+        religionAndCultureContent=new ArrayList<>();
+        religionAndCultureContentDownloadUrl=new ArrayList<>();
+
+
 
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(AddNewCountry.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
@@ -134,6 +138,25 @@ public class AddNewCountry extends AppCompatActivity {
             }
         });
 
+        mDataBinding.addNewCountryAddReligionImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                country.getReligionAndCulture().setSliderType(SliderType.IMAGE_SLIDER);
+                getImages(SELECT_RELIGION_CULTURE_IMAGE_CODE);
+
+            }
+        });
+
+
+        mDataBinding.addNewCountryReligionVideos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                country.getReligionAndCulture().setSliderType(SliderType.VIDEO);
+                getVideos(SELECT_RELIGION_CULTURE_VIDEO_CODE);
+            }
+        });
+
 
         mDataBinding.addNewCountryAddFlag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +171,7 @@ public class AddNewCountry extends AppCompatActivity {
                 getImage(SELECT_ARM_IMAGE_CODE);
             }
         });
+
 
         mDataBinding.addNewCountryDalicaciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -237,6 +261,25 @@ public class AddNewCountry extends AppCompatActivity {
                     mDataBinding.addNewCountryDelicaciesContent.setError("Empty field not allowed");
                     mDataBinding.addNewCountryDelicaciesContent.requestFocus();
                     return;
+                }else if(mDataBinding.addNewCountryReligionAndCultureContent.getText().toString().isEmpty()){
+                    mDataBinding.addNewCountryReligionAndCultureContent.setError("Empty field not allowed");
+                    mDataBinding.addNewCountryReligionAndCultureContent.requestFocus();
+                    return;
+                }else if(sliderContent.size()<1){
+                    Toast.makeText(AddNewCountry.this, "Please add Country Slider Images", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(flagUri==null){
+                    Toast.makeText(AddNewCountry.this, "Please add Flag Image", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(armsFlagUri==null){
+                    Toast.makeText(AddNewCountry.this, "Please add Coat of Arm Flag Image", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(delicaciesContent.size()<1){
+                    Toast.makeText(AddNewCountry.this, "Please add Delicacies Images", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(religionAndCultureContent.size()<1){
+                    Toast.makeText(AddNewCountry.this, "Please add Religion and Culture Images Images", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
 
@@ -246,9 +289,13 @@ public class AddNewCountry extends AppCompatActivity {
                 country.getInformation().setCapital(mDataBinding.addNewCountryCapital.getText().toString());
                 country.getInformation().setTemperature(Double.parseDouble(mDataBinding.addNewCountryTemperature.getText().toString()));
                 country.getInformation().setCurrencyName(mDataBinding.addNewCountryCurrency.getText().toString());
+                country.getInformation().setExtraInformation(mDataBinding.addNewCountryExtraContent.getText().toString());
                 country.setHistory(mDataBinding.addNewCountryHistory.getText().toString());
-                country.getInformation().setPopulation(Integer.parseInt(mDataBinding.addNewCountryPopulation.getText().toString()));
+                country.getInformation().setPopulation(mDataBinding.addNewCountryPopulation.getText().toString());
                 country.setCountryId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                country.getReligionAndCulture().setDescription(mDataBinding.addNewCountryReligionAndCultureContent.getText().toString());
+                country.getDelicacies().setDescription(mDataBinding.addNewCountryDelicaciesContent.getText().toString());
+
 
 
                 progressDialog.show();
@@ -263,6 +310,8 @@ public class AddNewCountry extends AppCompatActivity {
                                 sliderContentDownloadUrl.add(String.valueOf(uri));
                                 sliderContentCounter[0]++;
                                 Log.d(TAG, "onSuccess: slider content "+sliderContentCounter[0]);
+                                progressDialog.setMessage("Uploading country images "+sliderContentCounter[0]+"/"+sliderContent.size());
+
                                 if(sliderContentCounter[0] >=sliderContent.size()){
                                     Log.d(TAG, "onSuccess: slider content done");
 
@@ -279,11 +328,12 @@ public class AddNewCountry extends AppCompatActivity {
                                                     delicaciesContentDownloadUrl.add(uri.toString());
                                                     delicaciesContentCounter[0]++;
                                                     Log.d(TAG, "onSuccess: delicacies content "+delicaciesContentCounter[0]);
+                                                    progressDialog.setMessage("Uploading delicacies images"+delicaciesContentCounter[0]+"/"+delicaciesContent.size());
+
 
                                                     if(delicaciesContentCounter[0] >=delicaciesContent.size()){
                                                         Log.d(TAG, "onSuccess: delicacies content done ");
                                                         Log.d(TAG, "onSuccess: flag content start ");
-                                                        progressDialog.setMessage("Uploading flag image");
 
                                                         FireStoreUploader.uploadPhotos(flagUri, country.getCountryId(), new OnFileUploadListeners() {
                                                             @Override
@@ -293,7 +343,7 @@ public class AddNewCountry extends AppCompatActivity {
                                                                     public void onSuccess(Uri uri) {
                                                                         Log.d(TAG, "onSuccess: flag content done ");
                                                                         Log.d(TAG, "onSuccess: arm flag content start ");
-                                                                        progressDialog.setMessage("Uploading Arms Flag images");
+                                                                        progressDialog.setMessage("Uploading Arms Flag image");
 
                                                                         country.setFlagImageUrl(uri.toString());
 
@@ -303,35 +353,71 @@ public class AddNewCountry extends AppCompatActivity {
                                                                                 taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                                                     @Override
                                                                                     public void onSuccess(Uri uri) {
+
                                                                                         Log.d(TAG, "onSuccess: arm flag content done ");
-                                                                                        progressDialog.setMessage("Uploading Country Information");
-
+                                                                                        progressDialog.setMessage("Uploading Religion And Culture Images");
                                                                                         country.setArmFlagUrl(uri.toString());
-                                                                                        country.getCountrySlider().setSliderContent(sliderContentDownloadUrl);
-                                                                                        country.getDelicacies().setSliderContent(delicaciesContentDownloadUrl);
 
-                                                                                        DatabaseUploader.saveCountryContent(country, new OnTaskCompleteListeners() {
+
+
+                                                                                        final int[] religionCounter = {0};
+                                                                                        FireStoreUploader.uploadPhotos(religionAndCultureContent, country.getCountryId(), new OnFileUploadListeners() {
                                                                                             @Override
-                                                                                            public void onTaskSuccess() {
-                                                                                                Log.d(TAG, "onTaskSuccess: data uploaded");
-                                                                                                progressDialog.dismiss();
-                                                                                                AlertDialog dialog=new AlertDialog.Builder(AddNewCountry.this)
-                                                                                                        .setTitle("Message")
-                                                                                                        .setMessage("Country Added Succesfully")
-                                                                                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                                                                            @Override
-                                                                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                                                                finish();
-                                                                                                            }
-                                                                                                        }).create();
-                                                                                                dialog.show();
+                                                                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                                                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                                                                    @Override
+                                                                                                    public void onSuccess(Uri uri) {
+                                                                                                        religionAndCultureContentDownloadUrl.add(uri.toString());
+
+                                                                                                        religionCounter[0]++;
+                                                                                                        progressDialog.setMessage("Uploading Religion And Culture Images "+religionCounter[0]+"/"+religionAndCultureContent.size());
+                                                                                                        if(religionCounter[0] >=religionAndCultureContent.size()){
+                                                                                                            progressDialog.setMessage("Uploading Country Information");
+
+                                                                                                            country.getCountrySlider().setSliderContent(sliderContentDownloadUrl);
+                                                                                                            country.getDelicacies().setSliderContent(delicaciesContentDownloadUrl);
+                                                                                                            country.getReligionAndCulture().setSliderContent(religionAndCultureContentDownloadUrl);
+
+                                                                                                            DatabaseUploader.saveCountryContent(country, new OnTaskCompleteListeners() {
+                                                                                                                @Override
+                                                                                                                public void onTaskSuccess() {
+                                                                                                                    Log.d(TAG, "onTaskSuccess: data uploaded");
+                                                                                                                    progressDialog.dismiss();
+                                                                                                                    AlertDialog dialog=new AlertDialog.Builder(AddNewCountry.this)
+                                                                                                                            .setTitle("Message")
+                                                                                                                            .setMessage("Country Added Succesfully")
+                                                                                                                            .setCancelable(false)
+                                                                                                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                                                                                                 @Override
+                                                                                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                                                                                    finish();
+                                                                                                                                }
+                                                                                                                            }).create();
+                                                                                                                    dialog.show();
+                                                                                                                }
+
+                                                                                                                @Override
+                                                                                                                public void onTaskFail(String e) {
+
+                                                                                                                }
+                                                                                                            });
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
                                                                                             }
 
                                                                                             @Override
-                                                                                            public void onTaskFail(String e) {
+                                                                                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onFailure(String e) {
 
                                                                                             }
                                                                                         });
+
+
                                                                                     }
                                                                                 });
                                                                             }
@@ -415,7 +501,7 @@ public class AddNewCountry extends AppCompatActivity {
                     }
                     selectedSliderImageText.setText(data.getClipData().getItemCount()+" Images Selected");
 
-                }else if(data.getData()!=null){
+                }else if(data!=null&&data.getData()!=null){
                     Log.d(TAG, "onActivityResult: "+data.getData());
                     sliderContent.clear();
                     sliderContent.add(data.getData());
@@ -425,19 +511,19 @@ public class AddNewCountry extends AppCompatActivity {
             }
         }else if(requestCode==SELECT_SLIDER_VIDEO_CODE){
 
-            if(data.getData()!=null){
+            if(data!=null&&data.getData()!=null){
                 Log.d(TAG, "onActivityResult: "+data.getData());
                 sliderContent.clear();
                 sliderContent.add(data.getData());
                 selectedSliderVideoText.setText("1 Video Selected");
             }
         }else if(requestCode==SELECT_FLAG_IMAGE_CODE){
-            if(data.getData()!=null){
+            if(data!=null&&data.getData()!=null){
                 flagUri=data.getData();
                 selectedFlagText.setText("1 Flag Image Selected");
             }
         }else if(requestCode==SELECT_ARM_IMAGE_CODE){
-            if(data.getData()!=null){
+            if(data!=null&&data.getData()!=null){
                 armsFlagUri=data.getData();
                 selectedArmFlagText.setText("1 Arm Flag Selected");
             }
@@ -452,7 +538,7 @@ public class AddNewCountry extends AppCompatActivity {
                     }
                     selectedDelicaciesImageText.setText(data.getClipData().getItemCount()+" Images Selected");
 
-                }else if(data.getData()!=null){
+                }else if(data!=null&&data.getData()!=null){
                     Log.d(TAG, "onActivityResult: "+data.getData());
                     delicaciesContent.clear();
                     delicaciesContent.add(data.getData());
@@ -461,11 +547,38 @@ public class AddNewCountry extends AppCompatActivity {
             }
         }else if(requestCode==SELECT_DELICACIES_VIDEO_CODE){
 
-            if(data.getData()!=null){
+            if(data!=null&&data.getData()!=null){
                 Log.d(TAG, "onActivityResult: "+data.getData());
                 delicaciesContent.clear();
                 delicaciesContent.add(data.getData());
                 selectedDelicaciesVideoText.setText("1 Video Selected");
+
+            }
+        }else if(requestCode==SELECT_RELIGION_CULTURE_IMAGE_CODE){
+            if(resultCode==RESULT_OK){
+
+                if(data.getClipData()!=null){
+                    religionAndCultureContent.clear();
+
+                    for(int i=0;i<data.getClipData().getItemCount();i++){
+                        religionAndCultureContent.add(data.getClipData().getItemAt(i).getUri());
+                    }
+                    selectedReligionImageText.setText(data.getClipData().getItemCount()+" Images Selected");
+
+                }else if(data!=null&&data.getData()!=null){
+                    Log.d(TAG, "onActivityResult: "+data.getData());
+                    religionAndCultureContent.clear();
+                    religionAndCultureContent.add(data.getData());
+                    selectedReligionImageText.setText("1 Image Selected");
+                }
+            }
+        }else if(requestCode==SELECT_RELIGION_CULTURE_VIDEO_CODE){
+
+            if(data!=null&&data.getData()!=null){
+                Log.d(TAG, "onActivityResult: "+data.getData());
+                religionAndCultureContent.clear();
+                religionAndCultureContent.add(data.getData());
+                selectedReligionVideoText.setText("1 Video Selected");
 
             }
         }
@@ -486,6 +599,15 @@ public class AddNewCountry extends AppCompatActivity {
         mDataBinding= DataBindingUtil.setContentView(AddNewCountry.this,R.layout.activity_add_new_country);
         selectedSliderImageText=mDataBinding.addNewCountrySelectedImagesText;
         selectedSliderVideoText=mDataBinding.addNewCountrySelectedVideosText;
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setCanceledOnTouchOutside(false);
+        selectedFlagText=mDataBinding.addNewCountrySelectedFlagText;
+        selectedArmFlagText=mDataBinding.addNewCountrySelectedAramText;
+        selectedDelicaciesImageText=mDataBinding.addNewCountrySelectedDelicaciesImagesText;
+        selectedDelicaciesVideoText=mDataBinding.addNewCountrySelectedDelicaciesVideosText;
+        selectedReligionImageText=mDataBinding.addNewCountrySelectedReligionImagesText;
+        selectedReligionVideoText=mDataBinding.addNewCountrySelectedReligionVideosText;
     }
 
     private void getImages(int code){

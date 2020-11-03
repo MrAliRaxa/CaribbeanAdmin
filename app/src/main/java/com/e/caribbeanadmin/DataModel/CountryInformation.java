@@ -5,12 +5,11 @@ public class CountryInformation{
 
     private String motto;
     private String language;
-    private int population;
+    private String population;
     private String capital;
     private double temperature;
     private String currencyName;
     private String extraInformation;
-
 
     public String getExtraInformation() {
         return extraInformation;
@@ -45,11 +44,11 @@ public class CountryInformation{
         this.language = language;
     }
 
-    public int getPopulation() {
+    public String getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(String population) {
         this.population = population;
     }
 

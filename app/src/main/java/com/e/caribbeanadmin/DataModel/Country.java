@@ -12,6 +12,7 @@ public class Country {
     private String countryId;
     private String flagImageUrl;
     private String armFlagUrl;
+    private String extraInformation;
 
     public Country() {
         information=new CountryInformation();
@@ -20,6 +21,14 @@ public class Country {
         religionAndCulture=new ReligionAndCulture();
     }
 
+
+    public String getExtraInformation() {
+        return extraInformation;
+    }
+
+    public void setExtraInformation(String extraInformation) {
+        this.extraInformation = extraInformation;
+    }
 
     public ReligionAndCulture getReligionAndCulture() {
         return religionAndCulture;
