@@ -24,10 +24,12 @@ import android.widget.Toast;
 import com.e.caribbeanadmin.Constants.SliderType;
 import com.e.caribbeanadmin.DataModel.Country;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
+import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
 import com.e.caribbeanadmin.Listeners.OnFileUploadListeners;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
+import com.e.caribbeanadmin.Util.GenericMethods;
 import com.e.caribbeanadmin.databinding.ActivityAddNewCountryBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
@@ -124,7 +126,7 @@ public class AddNewCountry extends AppCompatActivity {
             public void onClick(View v) {
 
                 country.getCountrySlider().setSliderType(SliderType.IMAGE_SLIDER);
-                getImages(SELECT_SLIDER_IMAGE_CODE);
+                GenericMethods.getImages(SELECT_SLIDER_IMAGE_CODE,AddNewCountry.this);
 
             }
         });
@@ -134,7 +136,7 @@ public class AddNewCountry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 country.getCountrySlider().setSliderType(SliderType.VIDEO);
-                getVideos(SELECT_SLIDER_VIDEO_CODE);
+                GenericMethods.getVideos(SELECT_SLIDER_VIDEO_CODE,AddNewCountry.this);
             }
         });
 
@@ -143,7 +145,7 @@ public class AddNewCountry extends AppCompatActivity {
             public void onClick(View v) {
 
                 country.getReligionAndCulture().setSliderType(SliderType.IMAGE_SLIDER);
-                getImages(SELECT_RELIGION_CULTURE_IMAGE_CODE);
+                GenericMethods.getImages(SELECT_RELIGION_CULTURE_IMAGE_CODE,AddNewCountry.this);
 
             }
         });
@@ -153,7 +155,7 @@ public class AddNewCountry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 country.getReligionAndCulture().setSliderType(SliderType.VIDEO);
-                getVideos(SELECT_RELIGION_CULTURE_VIDEO_CODE);
+                GenericMethods.getVideos(SELECT_RELIGION_CULTURE_VIDEO_CODE,AddNewCountry.this);
             }
         });
 
@@ -161,14 +163,14 @@ public class AddNewCountry extends AppCompatActivity {
         mDataBinding.addNewCountryAddFlag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getImage(SELECT_FLAG_IMAGE_CODE);
+                GenericMethods.getImage(SELECT_FLAG_IMAGE_CODE,AddNewCountry.this);
             }
         });
 
         mDataBinding.addNewCountryAddArmFlag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getImage(SELECT_ARM_IMAGE_CODE);
+                GenericMethods.getImage(SELECT_ARM_IMAGE_CODE,AddNewCountry.this);
             }
         });
 
@@ -198,7 +200,7 @@ public class AddNewCountry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 country.getDelicacies().setSliderType(SliderType.IMAGE_SLIDER);
-                getImages(SELECT_DELICACIES_IMAGE_CODE);
+                GenericMethods.getImages(SELECT_DELICACIES_IMAGE_CODE,AddNewCountry.this);
             }
         });
 
@@ -206,7 +208,7 @@ public class AddNewCountry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 country.getDelicacies().setSliderType(SliderType.VIDEO);
-                getVideos(SELECT_DELICACIES_VIDEO_CODE);
+                GenericMethods.getVideos(SELECT_DELICACIES_VIDEO_CODE,AddNewCountry.this);
             }
         });
 
@@ -300,7 +302,7 @@ public class AddNewCountry extends AppCompatActivity {
 
                 progressDialog.show();
                 progressDialog.setMessage("Uploading country images");
-                FireStoreUploader.uploadPhotos(sliderContent, country.getCountryId(), new OnFileUploadListeners() {
+                FireStoreUploader.uploadPhotos(sliderContent, new OnFileUploadListeners() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -318,7 +320,7 @@ public class AddNewCountry extends AppCompatActivity {
                                     final int[] delicaciesContentCounter = {0};
                                     progressDialog.setMessage("Uploading delicacies images");
 
-                                    FireStoreUploader.uploadPhotos(delicaciesContent, country.getCountryId(), new OnFileUploadListeners() {
+                                    FireStoreUploader.uploadPhotos(delicaciesContent, new OnFileUploadListeners() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -335,7 +337,7 @@ public class AddNewCountry extends AppCompatActivity {
                                                         Log.d(TAG, "onSuccess: delicacies content done ");
                                                         Log.d(TAG, "onSuccess: flag content start ");
 
-                                                        FireStoreUploader.uploadPhotos(flagUri, country.getCountryId(), new OnFileUploadListeners() {
+                                                        FireStoreUploader.uploadPhotos(flagUri, new OnFileUploadListeners() {
                                                             @Override
                                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                                 taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -347,7 +349,7 @@ public class AddNewCountry extends AppCompatActivity {
 
                                                                         country.setFlagImageUrl(uri.toString());
 
-                                                                        FireStoreUploader.uploadPhotos(armsFlagUri, country.getCountryId(), new OnFileUploadListeners() {
+                                                                        FireStoreUploader.uploadPhotos(armsFlagUri, new OnFileUploadListeners() {
                                                                             @Override
                                                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                                                 taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -361,7 +363,7 @@ public class AddNewCountry extends AppCompatActivity {
 
 
                                                                                         final int[] religionCounter = {0};
-                                                                                        FireStoreUploader.uploadPhotos(religionAndCultureContent, country.getCountryId(), new OnFileUploadListeners() {
+                                                                                        FireStoreUploader.uploadPhotos(religionAndCultureContent, new OnFileUploadListeners() {
                                                                                             @Override
                                                                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                                                                 taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -415,7 +417,7 @@ public class AddNewCountry extends AppCompatActivity {
                                                                                             public void onFailure(String e) {
 
                                                                                             }
-                                                                                        });
+                                                                                        }, FireStorageAddresses.getSliderContentRef());
 
 
                                                                                     }
@@ -431,7 +433,7 @@ public class AddNewCountry extends AppCompatActivity {
                                                                             public void onFailure(String e) {
 
                                                                             }
-                                                                        });
+                                                                        },FireStorageAddresses.getSliderContentRef());
                                                                     }
                                                                 });
                                                             }
@@ -445,7 +447,7 @@ public class AddNewCountry extends AppCompatActivity {
                                                             public void onFailure(String e) {
 
                                                             }
-                                                        });
+                                                        },FireStorageAddresses.getSliderContentRef());
 
                                                     }
                                                 }
@@ -462,7 +464,7 @@ public class AddNewCountry extends AppCompatActivity {
                                         public void onFailure(String e) {
 
                                         }
-                                    });
+                                    },FireStorageAddresses.getSliderContentRef());
 
                                 }
                             }
@@ -479,7 +481,7 @@ public class AddNewCountry extends AppCompatActivity {
                     public void onFailure(String e) {
 
                     }
-                });
+                },FireStorageAddresses.getSliderContentRef());
 
             }
         });
@@ -610,24 +612,5 @@ public class AddNewCountry extends AppCompatActivity {
         selectedReligionVideoText=mDataBinding.addNewCountrySelectedReligionVideosText;
     }
 
-    private void getImages(int code){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), code);
-    }
 
-    private void getImage(int code){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), code);
-    }
-    private void getVideos(int code){
-        Intent intent = new Intent();
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Video"), code);
-    }
 }

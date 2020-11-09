@@ -8,4 +8,17 @@
         <item>Image</item>
         <item>Video</item>
     </array>
+
+    <array name="shopViewCategory">
+        <item>Select Category View Type</item>
+        <item>DMLI</item>
+        <item>DSLI</item>
+        <item>PSLI</item>
+        <item>DS</item>
+        <item>WABI</item>
+        <item>SL</item>
+        <item>DDSI</item>
+        <item>AABHW</item>
+        <item>NSEWT</item>
+    </array>
 </resources>

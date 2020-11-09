@@ -5,17 +5,21 @@ import com.google.firebase.storage.StorageReference;
 
 public class FireStorageAddresses {
 
-    public static StorageReference getSliderImageRef(String countryId){
-        return FirebaseStorage.getInstance().getReference("StorageContent")
-                .child(countryId).child("Images");
+    public static StorageReference getSliderContentRef(){
+        return FirebaseStorage.getInstance().getReference("Content")
+                .child("Country Data").child("ImagesAndVideos");
     }
-    public static StorageReference getCountryContentRef(String countryId){
-        return FirebaseStorage.getInstance().getReference("CountryContent")
-                .child(countryId).child("Content");
+    public static StorageReference getCountryContentRef(){
+        return FirebaseStorage.getInstance().getReference("Content")
+                .child("Country Data").child("Content");
+    }
+    public static StorageReference getShopRef(){
+        return FirebaseStorage.getInstance().getReference("Shops")
+                .child("Shop Data").child("Content");
     }
 
-    public static StorageReference getSliderVideoRef(String countryId){
-        return FirebaseStorage.getInstance().getReference("StorageContent")
-                .child(countryId).child("videos");
+    public static StorageReference getShopCategoryRef(){
+        return FirebaseStorage.getInstance().getReference("ShopCategories")
+                .child("Category Data").child("Content");
     }
 }
