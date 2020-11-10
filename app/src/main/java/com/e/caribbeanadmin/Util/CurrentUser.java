@@ -1,8 +1,7 @@
 package com.e.caribbeanadmin.Util;
 
-import com.e.caribbeanadmin.DataModel.UserProfile;
+import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.Exceptions.CurrentUserNotFoundException;
-import com.google.firebase.firestore.auth.User;
 
 public class CurrentUser {
 

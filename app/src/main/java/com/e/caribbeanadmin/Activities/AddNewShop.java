@@ -1,7 +1,6 @@
 package com.e.caribbeanadmin.Activities;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -10,11 +9,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.e.caribbeanadmin.DataModel.Shop;
-import com.e.caribbeanadmin.DataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.Adaptor.ShopCategorySpinnerAdaptor;
+import com.e.caribbeanadmin.Constants.ShopType;
+import com.e.caribbeanadmin.dataModel.Shop;
+import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
@@ -25,11 +26,13 @@ import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
 import com.e.caribbeanadmin.Util.DialogBuilder;
 import com.e.caribbeanadmin.Util.GenericMethods;
-import com.e.caribbeanadmin.databinding.ActivityAddNewCountryBinding;
 import com.e.caribbeanadmin.databinding.ActivityAddNewShopBinding;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddNewShop extends AppCompatActivity {
@@ -39,11 +42,14 @@ public class AddNewShop extends AppCompatActivity {
     private Uri bannerUri;
     private Uri logoUri;
     private ActivityAddNewShopBinding mDataBinding;
+    private List<ShopCategoryModel> shopCategories;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_add_new_shop);
         mDataBinding= DataBindingUtil.setContentView(AddNewShop.this,R.layout.activity_add_new_shop);
+        shopCategories=new ArrayList<>();
+
+
         mDataBinding.addNewShopLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,18 +67,28 @@ public class AddNewShop extends AppCompatActivity {
         Repository.getShopCategories(new OnShopCategoryLoadListeners() {
             @Override
             public void onCategoriesLoaded(List<ShopCategoryModel> shopCategoryModelList) {
-
-
-                ArrayAdapter arrayAdapter=new ArrayAdapter(AddNewShop.this, android.R.layout.simple_spinner_dropdown_item,shopCategoryModelList);
-                mDataBinding.newShopCategory.setAdapter(arrayAdapter);
+                shopCategories=shopCategoryModelList;
+                ShopCategoryModel categoryModel=new ShopCategoryModel();
+                categoryModel.setTitle("Select Shop Category");
+                categoryModel.setViewType(ShopType.NONE);
+                List<ShopCategoryModel> newCategories=new ArrayList<>();
+                newCategories.add(categoryModel);
+                newCategories.addAll(shopCategoryModelList);
+                ShopCategorySpinnerAdaptor shopCategorySpinnerAdaptor =new ShopCategorySpinnerAdaptor(newCategories,AddNewShop.this);
+                mDataBinding.newShopCategory.setAdapter(shopCategorySpinnerAdaptor);
 
             }
 
             @Override
             public void onEmpty() {
-                String categoryList
-                ArrayAdapter arrayAdapter=new ArrayAdapter(AddNewShop.this, android.R.layout.simple_spinner_dropdown_item,shopCategoryModelList);
-                mDataBinding.newShopCategory.setAdapter(arrayAdapter);
+                ShopCategoryModel categoryModel=new ShopCategoryModel();
+                categoryModel.setTitle("No Shop Category Found");
+                categoryModel.setViewType(ShopType.NONE);
+                List<ShopCategoryModel> newCategories=new ArrayList<>();
+                newCategories.add(categoryModel);
+                ShopCategorySpinnerAdaptor shopCategorySpinnerAdaptor =new ShopCategorySpinnerAdaptor(newCategories,AddNewShop.this);
+
+                mDataBinding.newShopCategory.setAdapter(shopCategorySpinnerAdaptor);
             }
 
             @Override
@@ -93,6 +109,14 @@ public class AddNewShop extends AppCompatActivity {
                     mDataBinding.newShopContactNumber.setError("Empty Not Allowed");
                     mDataBinding.newShopContactNumber.requestFocus();
                     return;
+                }else if(mDataBinding.newShopLat.getText().toString().isEmpty()){
+                    mDataBinding.newShopLat.setError("Empty Not Allowed");
+                    mDataBinding.newShopLat.requestFocus();
+                    return;
+                }else if(mDataBinding.newShopLng.getText().toString().isEmpty()){
+                    mDataBinding.newShopLng.setError("Empty Not Allowed");
+                    mDataBinding.newShopLng.requestFocus();
+                    return;
                 }else if(mDataBinding.newShopCategory.getSelectedItemPosition()==0){
                     Toast.makeText(AddNewShop.this, "Please Select Shop Category", Toast.LENGTH_SHORT).show();
                     return;
@@ -112,8 +136,9 @@ public class AddNewShop extends AppCompatActivity {
                 Shop shop=new Shop();
                 shop.setName(mDataBinding.newShopName.getText().toString());
                 shop.setContact(mDataBinding.newShopContactNumber.getText().toString());
-                shop.setCategory(mDataBinding.newShopCategory.getSelectedItemPosition()+1);
-
+                shop.setCategoryId(shopCategories.get(mDataBinding.newShopCategory.getSelectedItemPosition()-1).getId());
+                LatLng latLng=new LatLng(Double.parseDouble(mDataBinding.newShopLat.getText().toString()),Double.parseDouble(mDataBinding.newShopLng.getText().toString()));
+                shop.setLatLng(latLng);
                 loading.setMessage("Uploading logo image . . .");
                 FireStoreUploader.uploadPhotos(logoUri, new OnFileUploadListeners() {
                     @Override

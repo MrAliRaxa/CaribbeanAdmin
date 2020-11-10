@@ -8,18 +8,19 @@ import android.widget.BaseAdapter;
 
 import androidx.databinding.DataBindingUtil;
 
-import com.e.caribbeanadmin.DataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.Util.GenericMethods;
+import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.databinding.ShopCategoryViewLayoutBinding;
 
 import java.util.List;
 
-public class ShopCategorySpinner extends BaseAdapter {
+public class ShopCategorySpinnerAdaptor extends BaseAdapter {
 
     private List<ShopCategoryModel> shopCategoryModels;
     private Context context;
 
-    public ShopCategorySpinner(List<ShopCategoryModel> shopCategoryModels, Context context) {
+    public ShopCategorySpinnerAdaptor(List<ShopCategoryModel> shopCategoryModels, Context context) {
         this.shopCategoryModels = shopCategoryModels;
         this.context = context;
     }
@@ -43,9 +44,12 @@ public class ShopCategorySpinner extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ShopCategoryViewLayoutBinding categoryViewLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.shop_category_view_layout,parent,false);
-        categoryViewLayoutBinding.shopCategoryViewTitle.setText(shopCategoryModels.get(position).getTitle());
-        String[] viewTypes=context.getResources().getStringArray(R.array.shopViewCategory);
-        categoryViewLayoutBinding.shopCategoryViewSubTitle.setText("("+viewTypes[position+1]+")");
+        categoryViewLayoutBinding.setCategory(shopCategoryModels.get(position));
+
+        if(position!=0){
+            categoryViewLayoutBinding.shopCategoryViewSubTitle.setText("("+GenericMethods.shopTypeToString(shopCategoryModels.get(position).getViewType())+")");
+        }
+
         return  categoryViewLayoutBinding.getRoot();
     }
 }

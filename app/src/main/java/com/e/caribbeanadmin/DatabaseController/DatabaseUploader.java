@@ -3,11 +3,11 @@ package com.e.caribbeanadmin.DatabaseController;
 import androidx.annotation.NonNull;
 
 
-import com.e.caribbeanadmin.DataModel.Country;
-import com.e.caribbeanadmin.DataModel.Shop;
-import com.e.caribbeanadmin.DataModel.ShopCategoryModel;
-import com.e.caribbeanadmin.DataModel.TourismSlider;
-import com.e.caribbeanadmin.DataModel.UserProfile;
+import com.e.caribbeanadmin.dataModel.Country;
+import com.e.caribbeanadmin.dataModel.Shop;
+import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.dataModel.TourismSlider;
+import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,7 +33,7 @@ public class DatabaseUploader {
     }
 
     public static void publishNewCategory(ShopCategoryModel shopCategoryModel,OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getShopCategoryCollection(shopCategoryModel.getId()).set(shopCategoryModel)
+        DatabaseAddresses.getShopCategoryCollection().document(shopCategoryModel.getId()).set(shopCategoryModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.e.caribbeanadmin.Constants.SliderType;
-import com.e.caribbeanadmin.DataModel.TourismSlider;
+import com.e.caribbeanadmin.dataModel.TourismSlider;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;

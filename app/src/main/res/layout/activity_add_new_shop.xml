@@ -23,36 +23,78 @@
                     android:layout_margin="10dp"
                     android:padding="10dp"
                     >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Shop Name"
-                        android:layout_marginBottom="15dp"
-                        />
-                    <EditText
-                        android:id="@+id/newShop_name"
-
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/round_edit_text"
-                        android:inputType="textPersonName"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Contact Number"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginTop="10dp"
-                        />
-                    <EditText
-                        android:id="@+id/newShop_contactNumber"
+                        android:layout_height="match_parent"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/newShop_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:padding="10dp"
+                            android:inputType="textPersonName"
+                            android:hint="Shop Name"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/round_edit_text"
-                        android:inputType="phone"
-                        />
+                        android:layout_height="match_parent"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/newShop_contactNumber"
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:inputType="phone"
+                            android:hint="Contact Number"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_marginEnd="10dp"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/newShop_lat"
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Lat"
+                                android:inputType="text"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:layout_marginStart="10dp"
+
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/newShop_lng"
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Lang"
+                                android:inputType="text"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -60,11 +102,11 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="10dp"
                         />
+
                     <Spinner
                         android:id="@+id/newShop_category"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/round_edit_text"
+                        android:layout_height="90dp"
                         android:inputType="phone"
                         />
 

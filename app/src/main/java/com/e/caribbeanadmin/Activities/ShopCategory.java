@@ -8,13 +8,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.Toast;
 
-import com.e.caribbeanadmin.DataModel.Shop;
-import com.e.caribbeanadmin.DataModel.ShopCategoryModel;
-import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
+import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
@@ -24,7 +21,6 @@ import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Util.DialogBuilder;
 import com.e.caribbeanadmin.Util.GenericMethods;
 import com.e.caribbeanadmin.databinding.ActivityAddNewCategoryBinding;
-import com.e.caribbeanadmin.databinding.ActivityAddNewShopBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 

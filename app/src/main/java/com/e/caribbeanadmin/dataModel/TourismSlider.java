@@ -1,17 +1,23 @@
-package com.e.caribbeanadmin.DataModel;
+package com.e.caribbeanadmin.dataModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountrySlider {
-
+public class TourismSlider {
     private List<String> sliderContent;
     private int sliderType;
+    private String id;
 
-    public CountrySlider() {
+    public TourismSlider() {
+        sliderContent=new ArrayList<>();
+    }
 
-        sliderContent =new ArrayList<>();
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<String> getSliderContent() {
@@ -21,8 +27,6 @@ public class CountrySlider {
     public void setSliderContent(List<String> sliderContent) {
         this.sliderContent = sliderContent;
     }
-
-
 
     public int getSliderType() {
         return sliderType;

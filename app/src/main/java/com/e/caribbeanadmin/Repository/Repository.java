@@ -2,8 +2,8 @@ package com.e.caribbeanadmin.Repository;
 
 import androidx.annotation.NonNull;
 
-import com.e.caribbeanadmin.DataModel.ShopCategoryModel;
-import com.e.caribbeanadmin.DataModel.UserProfile;
+import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.Listeners.OnShopCategoryLoadListeners;
 import com.e.caribbeanadmin.Listeners.OnUserProfileLoadListeners;

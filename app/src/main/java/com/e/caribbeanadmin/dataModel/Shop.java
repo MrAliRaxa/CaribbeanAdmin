@@ -1,11 +1,24 @@
-package com.e.caribbeanadmin.DataModel;
+package com.e.caribbeanadmin.dataModel;
+
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class Shop {
     private String name;
     private String logoUrl;
     private String bannerUrl;
     private String contact;
-    private int category;
+    private String categoryId;
+    private LatLng latLng;
+
+
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
+    }
 
     public String getName() {
         return name;
@@ -39,11 +52,11 @@ public class Shop {
         this.contact = contact;
     }
 
-    public int getCategory() {
-        return category;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(int category) {
-        this.category = category;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 
 
 import com.e.caribbeanadmin.Constants.AccountType;
-import com.e.caribbeanadmin.DataModel.UserProfile;
+import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;

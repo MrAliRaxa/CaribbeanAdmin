@@ -1,4 +1,4 @@
-package com.e.caribbeanadmin.DataModel;
+package com.e.caribbeanadmin.dataModel;
 
 public class UserProfile {
     private String userName;

@@ -1,7 +1,4 @@
-package com.e.caribbeanadmin.DataModel;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.e.caribbeanadmin.dataModel;
 
 public class Country {
     private CountryInformation information;

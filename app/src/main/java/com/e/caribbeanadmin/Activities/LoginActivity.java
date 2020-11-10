@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.e.caribbeanadmin.DataModel.UserProfile;
+import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnUserProfileLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;

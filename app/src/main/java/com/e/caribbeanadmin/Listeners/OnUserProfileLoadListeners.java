@@ -1,9 +1,6 @@
 package com.e.caribbeanadmin.Listeners;
 
-import com.e.caribbeanadmin.DataModel.UserProfile;
-import com.google.firebase.firestore.auth.User;
-
-import java.nio.file.attribute.UserPrincipal;
+import com.e.caribbeanadmin.dataModel.UserProfile;
 
 public interface OnUserProfileLoadListeners {
     public void onUserProfileLoaded(UserProfile userProfile);

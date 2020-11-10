@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="category"
+            type="com.e.caribbeanadmin.dataModel.ShopCategoryModel" />
+    </data>
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -7,7 +13,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
+            app:cardElevation="7dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -21,16 +28,18 @@
                     android:id="@+id/shopCategoryView_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FoodPoint"
-                    android:textSize="20sp"
+                    android:text="@{category.title}"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_horizontal"
                     />
+
                 <TextView
                     android:id="@+id/shopCategoryView_subTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(DMLI)"
+                    android:text=""
+                    android:textSize="10sp"
                     android:layout_gravity="center_horizontal"
                     />
             </LinearLayout>

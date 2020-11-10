@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.e.caribbeanadmin.Constants.SliderType;
-import com.e.caribbeanadmin.DataModel.Country;
+import com.e.caribbeanadmin.dataModel.Country;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
