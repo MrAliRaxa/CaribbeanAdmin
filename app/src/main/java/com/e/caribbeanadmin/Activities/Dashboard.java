@@ -48,6 +48,20 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
+        mDataBinding.addCategoriesSlider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, AddShopCategoriesSlider.class));
+
+            }
+        });
+        mDataBinding.addShopsSlider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, AddShopsSlider.class));
+
+            }
+        });
 
     }
 }

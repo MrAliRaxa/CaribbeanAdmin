@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import com.e.caribbeanadmin.dataModel.Country;
 import com.e.caribbeanadmin.dataModel.Shop;
 import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
-import com.e.caribbeanadmin.dataModel.TourismSlider;
+import com.e.caribbeanadmin.dataModel.SliderContent;
 import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,9 +74,9 @@ public class DatabaseUploader {
             }
         });
     }
-    public static void saveTourismSliderContent(TourismSlider tourismSlider, OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getTourismSliderCollection(tourismSlider.getId())
-                .set(tourismSlider).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public static void saveShopCategoriesSliderContent(SliderContent sliderContent, OnTaskCompleteListeners onTaskCompleteListeners){
+        DatabaseAddresses.getShopsCategorySliderDoc()
+                .set(sliderContent).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -87,4 +87,18 @@ public class DatabaseUploader {
             }
         });
     }
+    public static void saveShopSliderContent(SliderContent sliderContent, OnTaskCompleteListeners onTaskCompleteListeners){
+        DatabaseAddresses.getShopsSliderDoc()
+                .set(sliderContent).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    onTaskCompleteListeners.onTaskSuccess();
+                }else{
+                    onTaskCompleteListeners.onTaskFail(task.getException().getMessage());
+                }
+            }
+        });
+    }
+
 }

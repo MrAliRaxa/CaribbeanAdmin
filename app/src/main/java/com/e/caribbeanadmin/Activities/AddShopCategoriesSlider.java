@@ -1,5 +1,9 @@
 package com.e.caribbeanadmin.Activities;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,18 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.e.caribbeanadmin.Constants.SliderType;
-import com.e.caribbeanadmin.dataModel.SliderContent;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
@@ -29,70 +24,33 @@ import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Util.DialogBuilder;
 import com.e.caribbeanadmin.Util.GenericMethods;
-import com.e.caribbeanadmin.databinding.ActivityAddExplorerTourismSliderBinding;
+import com.e.caribbeanadmin.dataModel.SliderContent;
+import com.e.caribbeanadmin.databinding.ActivityAddShopCategoriesSliderBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class AddExplorerTourismSlider extends AppCompatActivity {
-
+public class AddShopCategoriesSlider extends AppCompatActivity {
     private final static int IMAGE_CODE=1;
-    private final static int VIDEO_CODE=2;
     private List<Uri> sliderContentList;
     private TextView selectedSliderImageText;
-    private TextView selectedSliderVideoText;
-    private ActivityAddExplorerTourismSliderBinding mDataBinding;
-    private Context context;
-    private SliderContent sliderContent;
-    private static final String TAG = "AddExplorerTourismSlide";
+    private ActivityAddShopCategoriesSliderBinding mDataBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDataBinding= DataBindingUtil.setContentView(AddExplorerTourismSlider.this,R.layout.activity_add_explorer_tourism_slider);
+        setContentView(R.layout.activity_add_shop_categories_slider);
+        mDataBinding= DataBindingUtil.setContentView(AddShopCategoriesSlider.this,R.layout.activity_add_shop_categories_slider);
         sliderContentList =new ArrayList<>();
         selectedSliderImageText=mDataBinding.addNewTourismSelectedImagesText;
-        selectedSliderVideoText=mDataBinding.addNewTourismSelectedVideosText;
-        context=AddExplorerTourismSlider.this;
-        sliderContent =new SliderContent();
-        Spinner contentSpinner=mDataBinding.addNewTourismSliderSpinner;
-        contentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(contentSpinner.getSelectedItemPosition()==0){
-                    mDataBinding.addNewTourismSliderImagesLayout.setVisibility(View.VISIBLE);
-                    mDataBinding.addNewTourismSliderVideosLayout.setVisibility(View.GONE);
-                }else{
-                    mDataBinding.addNewTourismSliderImagesLayout.setVisibility(View.GONE);
-                    mDataBinding.addNewTourismSliderVideosLayout.setVisibility(View.VISIBLE);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
         mDataBinding.addNewTourismAddSliderImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GenericMethods.getImages(IMAGE_CODE,AddExplorerTourismSlider.this);
-                sliderContent.setSliderType(SliderType.IMAGE_SLIDER);
+                GenericMethods.getImages(IMAGE_CODE,AddShopCategoriesSlider.this);
             }
         });
-        mDataBinding.addNewTourismAddSliderVideos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sliderContent.setSliderType(SliderType.VIDEO);
-                GenericMethods.getVideos(VIDEO_CODE,AddExplorerTourismSlider.this);
-            }
-        });
-
         mDataBinding.addTourismExplorerPublishContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,10 +58,11 @@ public class AddExplorerTourismSlider extends AppCompatActivity {
                 if(sliderContentList.size()>0){
 
                     final int[] contentCounter = {0};
-                    ProgressDialog dialog= DialogBuilder.getSimpleLoadingDialog(context,"Loading","Uploading content . . ."+contentCounter[0]+"/"+ sliderContentList.size());
+                    ProgressDialog dialog= DialogBuilder.getSimpleLoadingDialog(getContext(),"Loading","Uploading content . . ."+contentCounter[0]+"/"+ sliderContentList.size());
                     dialog.show();
+                    SliderContent sliderContent=new SliderContent();
 
-                    sliderContent.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+
 
                     FireStoreUploader.uploadPhotos(sliderContentList,"Tourism Slider Data", new OnFileUploadListeners() {
                         @Override
@@ -112,16 +71,16 @@ public class AddExplorerTourismSlider extends AppCompatActivity {
                             taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    sliderContent.getSliderContent().add(uri.toString());
                                     contentCounter[0]++;
                                     dialog.setMessage("Uploading content . . ."+contentCounter[0]+"/"+ sliderContentList.size());
+                                    sliderContent.getSliderContent().add(String.valueOf(uri));
                                     if(contentCounter[0] >= sliderContentList.size()){
 
                                         DatabaseUploader.saveShopCategoriesSliderContent(sliderContent, new OnTaskCompleteListeners() {
                                             @Override
                                             public void onTaskSuccess() {
                                                 dialog.dismiss();
-                                                AlertDialog msgDialog=DialogBuilder.getSimpleMsg(context, "Success", "Content uploaded successfully"
+                                                AlertDialog msgDialog=DialogBuilder.getSimpleMsg(getContext(), "Success", "Content uploaded successfully"
                                                         , new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
@@ -135,7 +94,7 @@ public class AddExplorerTourismSlider extends AppCompatActivity {
 
                                             @Override
                                             public void onTaskFail(String e) {
-                                                Toast.makeText(context, "Error "+e, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Error "+e, Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -154,16 +113,20 @@ public class AddExplorerTourismSlider extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String e) {
-                            Toast.makeText(AddExplorerTourismSlider.this, "Error :"+e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error :"+e, Toast.LENGTH_SHORT).show();
                         }
                     }, FireStorageAddresses.getSliderContentRef());
                 }else{
-                    Toast.makeText(AddExplorerTourismSlider.this, "Please Select Video Or Images", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please Select Video Or Images", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    private Context getContext(){
+
+        return AddShopCategoriesSlider.this;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -178,20 +141,11 @@ public class AddExplorerTourismSlider extends AppCompatActivity {
                     selectedSliderImageText.setText(data.getClipData().getItemCount()+" Images Selected");
 
                 }else if(data!=null&&data.getData()!=null){
-                    Log.d(TAG, "onActivityResult: "+data.getData());
+
                     sliderContentList.clear();
                     sliderContentList.add(data.getData());
                     selectedSliderImageText.setText("1 Image Selected");
                 }
-            }
-        }else if(requestCode==VIDEO_CODE){
-
-            if(data!=null&&data.getData()!=null){
-                Log.d(TAG, "onActivityResult: "+data.getData());
-                sliderContentList.clear();
-                sliderContentList.add(data.getData());
-                Log.d(TAG, "onActivityResult: "+ sliderContentList.size());
-                selectedSliderVideoText.setText("1 Video Selected");
             }
         }
     }

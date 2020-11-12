@@ -137,9 +137,11 @@ public class AddNewShop extends AppCompatActivity {
                 shop.setName(mDataBinding.newShopName.getText().toString());
                 shop.setContact(mDataBinding.newShopContactNumber.getText().toString());
                 shop.setCategoryId(shopCategories.get(mDataBinding.newShopCategory.getSelectedItemPosition()-1).getId());
-                LatLng latLng=new LatLng(Double.parseDouble(mDataBinding.newShopLat.getText().toString()),Double.parseDouble(mDataBinding.newShopLng.getText().toString()));
-                shop.setLatLng(latLng);
+                shop.setLat(Double.parseDouble(mDataBinding.newShopLat.getText().toString()));
+                shop.setLng(Double.parseDouble(mDataBinding.newShopLng.getText().toString()));
                 loading.setMessage("Uploading logo image . . .");
+
+
                 FireStoreUploader.uploadPhotos(logoUri, new OnFileUploadListeners() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

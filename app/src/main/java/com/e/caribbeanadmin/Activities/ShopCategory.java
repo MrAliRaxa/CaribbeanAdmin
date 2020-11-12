@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
@@ -63,10 +64,14 @@ public class ShopCategory extends AppCompatActivity {
                 loading.setCanceledOnTouchOutside(false);
                 loading.show();
 
+
                 ShopCategoryModel shopCategoryModel=new ShopCategoryModel();
                 shopCategoryModel.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 shopCategoryModel.setTitle(mDataBinding.addNewShopCategoryName.getEditText().getText().toString());
                 shopCategoryModel.setViewType(mDataBinding.addNewShopCategoryViewCategory.getSelectedItemPosition()+1);
+
+
+
                 FireStoreUploader.uploadPhotos(categoryImageUri, new OnFileUploadListeners() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

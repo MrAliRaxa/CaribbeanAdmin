@@ -18,18 +18,20 @@ public class DatabaseAddresses {
     public static DocumentReference getShopDocument(String docId){
         return FirebaseFirestore.getInstance().collection("ShopCollection")
                 .document(docId);
+    }    public static CollectionReference getShopCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopCollection");
     }
     public static CollectionReference getShopCategoryCollection(){
         return FirebaseFirestore.getInstance().collection("ShopCategoryCollection");
     }
-    public static DocumentReference getShopCategoryDocument(String docId){
-        return FirebaseFirestore.getInstance().collection("ShopCategoryCollection")
-                .document(docId);
-    }
 
-    public static DocumentReference getTourismSliderCollection(String docId){
-        return FirebaseFirestore.getInstance().collection("TourismSliderCollection")
-                .document("TourismSlider");
+    public static DocumentReference getShopsCategorySliderDoc(){
+        return FirebaseFirestore.getInstance().collection("SliderCollection")
+                .document("ShopsCategorySlider");
+    }
+    public static DocumentReference getShopsSliderDoc(){
+        return FirebaseFirestore.getInstance().collection("SliderCollection")
+                .document("ShopsSlider");
     }
 
 }
