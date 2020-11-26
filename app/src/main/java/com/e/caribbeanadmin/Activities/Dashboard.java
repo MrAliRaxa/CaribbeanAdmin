@@ -63,5 +63,13 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        mDataBinding.shopManagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, ShopManagement.class));
+
+            }
+        });
+
     }
 }

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activities.ShopComponentManagement"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/addDealsAndPromotions"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Deals and Promotions"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                />
+            <Button
+                android:id="@+id/addMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Menu"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addLocations"
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Location"
+                android:textAllCaps="false"
+                />
+            <Button
+                android:id="@+id/addInformation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Information"
+                android:visibility="gone"
+
+                android:textAllCaps="false"
+                />
+            <Button
+                android:id="@+id/addShowroom"
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Showroom"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addPrices"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Prices"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addDirectory"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Directory"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addStores"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Stores"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addAtmLocations"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add ATM Locations"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addBankLocations"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Bank Locations"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addActivities"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Activities"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addAttractions"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Attractions"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addBuildings"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Buildings"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addHistoricalSites"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Historical Sites"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addWildLife"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Wildlife"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addNorth"
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add North"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addEast"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add East"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addWest"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add West"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addSouth"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add South"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addTobago"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Tobago"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+            <Button
+                android:id="@+id/addWebsite"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Add Website"
+                android:textAllCaps="false"
+                android:visibility="gone"
+
+                />
+
+
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/shopContainer"
+            />
+    </FrameLayout>
+</layout>

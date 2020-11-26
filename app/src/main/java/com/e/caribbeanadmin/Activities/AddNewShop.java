@@ -33,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddNewShop extends AppCompatActivity {
@@ -134,6 +135,7 @@ public class AddNewShop extends AppCompatActivity {
                 loading.setCancelable(false);
                 loading.show();
                 Shop shop=new Shop();
+                shop.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 shop.setName(mDataBinding.newShopName.getText().toString());
                 shop.setContact(mDataBinding.newShopContactNumber.getText().toString());
                 shop.setCategoryId(shopCategories.get(mDataBinding.newShopCategory.getSelectedItemPosition()-1).getId());

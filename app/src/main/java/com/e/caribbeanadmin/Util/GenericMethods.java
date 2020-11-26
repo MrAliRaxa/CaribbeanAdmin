@@ -2,17 +2,11 @@ package com.e.caribbeanadmin.Util;
 
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.e.caribbeanadmin.Constants.ShopType;
-import com.e.caribbeanadmin.R;
 
 public class GenericMethods {
     public static void getImages(int code,AppCompatActivity activity){
@@ -51,7 +45,7 @@ public class GenericMethods {
             return "DSLI";
         }else if(ShopType.NSEWT==shopType){
             return "NSEWT";
-        }else if(ShopType.PSL==shopType){
+        }else if(ShopType.PSLI ==shopType){
             return "PSL";
         }else if(ShopType.WABI==shopType){
             return "WABI";

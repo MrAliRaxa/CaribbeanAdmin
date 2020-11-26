@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 
 
 import com.e.caribbeanadmin.dataModel.Country;
+import com.e.caribbeanadmin.dataModel.Item;
+import com.e.caribbeanadmin.dataModel.MenuItem;
 import com.e.caribbeanadmin.dataModel.Shop;
 import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.dataModel.ShopLocation;
 import com.e.caribbeanadmin.dataModel.SliderContent;
 import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
@@ -47,7 +50,7 @@ public class DatabaseUploader {
         });
     }
     public static void publishNewShop(Shop shop,OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getShopDocument(String.valueOf(Calendar.getInstance().getTimeInMillis()))
+        DatabaseAddresses.getShopDocument(shop.getId())
                 .set(shop).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -60,7 +63,6 @@ public class DatabaseUploader {
             }
         });
     }
-
     public static void saveCountryContent(Country country, OnTaskCompleteListeners onTaskCompleteListeners){
         DatabaseAddresses.getCountriesCollection(country.getCountryId())
                 .set(country).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -100,5 +102,46 @@ public class DatabaseUploader {
             }
         });
     }
+    public static void publishDeal(Item item,OnTaskCompleteListeners onTaskCompleteListeners){
+        DatabaseAddresses.getDealsCollection().document(item.getId()).set(item).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                onTaskCompleteListeners.onTaskSuccess();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onTaskCompleteListeners.onTaskFail(e.getMessage());
+            }
+        });
+    }
+    public static void publishMenu(MenuItem menuItem,OnTaskCompleteListeners onTaskCompleteListeners){
+        DatabaseAddresses.getShopMenuCollection().document(menuItem.getShopId()).set(menuItem)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                onTaskCompleteListeners.onTaskSuccess();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onTaskCompleteListeners.onTaskFail(e.getMessage());
+            }
+        });
+    }
 
+    public static void publishShopLocation(ShopLocation shopLocation,OnTaskCompleteListeners onTaskCompleteListeners){
+        DatabaseAddresses.getShopMenuCollection().document(shopLocation.getId()).set(shopLocation)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onTaskCompleteListeners.onTaskSuccess();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onTaskCompleteListeners.onTaskFail(e.getMessage());
+            }
+        });
+    }
 }

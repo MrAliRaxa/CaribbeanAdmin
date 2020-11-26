@@ -1,8 +1,19 @@
 package com.e.caribbeanadmin.Repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.e.caribbeanadmin.Listeners.OnCategoryLoadListeners;
+import com.e.caribbeanadmin.Listeners.OnItemLoadListeners;
+import com.e.caribbeanadmin.Listeners.OnMenuItemLoadListeners;
+import com.e.caribbeanadmin.Listeners.OnShopLoadListeners;
+import com.e.caribbeanadmin.Listeners.OnShopLocationLoadListeners;
+import com.e.caribbeanadmin.dataModel.Item;
+import com.e.caribbeanadmin.dataModel.MenuItem;
+import com.e.caribbeanadmin.dataModel.Shop;
 import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.dataModel.ShopLocation;
 import com.e.caribbeanadmin.dataModel.UserProfile;
 import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.Listeners.OnShopCategoryLoadListeners;
@@ -17,7 +28,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
-        public static void getMyProfile(String userId, OnUserProfileLoadListeners onUserProfileLoadListeners){
+    private static final String TAG = "Repository";
+    public static void getShopCategory(String categoryId, OnCategoryLoadListeners onCategoryLoadListeners){
+        DatabaseAddresses.getShopCategoryCollection().document(categoryId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            onCategoryLoadListeners.onCategoriesLoaded(documentSnapshot.toObject(ShopCategoryModel.class));
+                        }else{
+                            onCategoryLoadListeners.onEmpty();
+                            Log.d(TAG, "onSuccess: "+documentSnapshot.getReference().getPath());
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onCategoryLoadListeners.onFailure(e.getMessage());
+            }
+        });
+    }
+
+    public static void getMyProfile(String userId, OnUserProfileLoadListeners onUserProfileLoadListeners){
             DatabaseAddresses.getUserAccountCollection(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -31,7 +63,59 @@ public class Repository {
             });
         }
 
-        public static void getShopCategories(OnShopCategoryLoadListeners onShopCategoryLoadListeners){
+    public static void getAllShops(OnShopLoadListeners onShopLoadListeners){
+        DatabaseAddresses.getShopCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<Shop> shopList=new ArrayList<>();
+
+                for(QueryDocumentSnapshot snapshot:queryDocumentSnapshots){
+                    shopList.add(snapshot.toObject(Shop.class));
+                }
+
+                if(shopList.size()>0){
+                    onShopLoadListeners.onShopsLoaded(shopList);
+                }else{
+                    onShopLoadListeners.onEmpty();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onShopLoadListeners.onFailure(e.getMessage());
+            }
+        });
+    }
+
+    public static void getShopDealsAndPromotions(String itemShopId,OnItemLoadListeners onItemLoadListeners){
+        DatabaseAddresses.getDealsCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<Item> items=new ArrayList<>();
+
+                for(QueryDocumentSnapshot snapshot:queryDocumentSnapshots){
+
+                    Item item=snapshot.toObject(Item.class);
+                    if(item.getShopId().equals(itemShopId)){
+                        items.add(snapshot.toObject(Item.class));
+                    }
+
+                }
+
+                if(items.size()>0){
+                    onItemLoadListeners.onItemLoaded(items);
+                }else{
+                    onItemLoadListeners.onEmpty();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+               onItemLoadListeners.onFailure(e.getMessage());
+            }
+        });
+    }
+    public static void getShopCategories(OnShopCategoryLoadListeners onShopCategoryLoadListeners){
             DatabaseAddresses.getShopCategoryCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -54,4 +138,52 @@ public class Repository {
                 }
             });
         }
+
+        public static void getShopMenuCategories(String shopId, OnMenuItemLoadListeners onMenuItemLoadListeners){
+            DatabaseAddresses.getShopMenuCollection().document(shopId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        onMenuItemLoadListeners.onMenuLoaded(documentSnapshot.toObject(MenuItem.class));
+                    }else{
+                        onMenuItemLoadListeners.onEmpty();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    onMenuItemLoadListeners.onFailure(e.getMessage());
+                }
+            });
+
+        }
+        public static void getShopLocations(String shopId, OnShopLocationLoadListeners onShopLocationLoadListeners){
+            DatabaseAddresses.getShopLocationCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                    List<ShopLocation> shopLocations=new ArrayList<>();
+                    for(QueryDocumentSnapshot documentSnapshot:queryDocumentSnapshots){
+                        ShopLocation location=documentSnapshot.toObject(ShopLocation.class);
+                        if(location.getShopId().equals(shopId)){
+                            shopLocations.add(location);
+
+                        }
+                    }
+
+                    if(shopLocations.size()>0){
+                        onShopLocationLoadListeners.onLocationsLoaded(shopLocations);
+                    }else{
+                        onShopLocationLoadListeners.onEmpty();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    onShopLocationLoadListeners.onFailure(e.getMessage());
+                }
+            });
+        }
+
+
 }

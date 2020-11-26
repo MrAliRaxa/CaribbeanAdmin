@@ -68,7 +68,7 @@ public class ShopCategory extends AppCompatActivity {
                 ShopCategoryModel shopCategoryModel=new ShopCategoryModel();
                 shopCategoryModel.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 shopCategoryModel.setTitle(mDataBinding.addNewShopCategoryName.getEditText().getText().toString());
-                shopCategoryModel.setViewType(mDataBinding.addNewShopCategoryViewCategory.getSelectedItemPosition()+1);
+                shopCategoryModel.setViewType(mDataBinding.addNewShopCategoryViewCategory.getSelectedItemPosition());
 
 
 

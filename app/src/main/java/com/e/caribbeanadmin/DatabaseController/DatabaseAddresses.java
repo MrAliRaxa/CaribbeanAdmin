@@ -1,6 +1,7 @@
 package com.e.caribbeanadmin.DatabaseController;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,4 +35,13 @@ public class DatabaseAddresses {
                 .document("ShopsSlider");
     }
 
+    public static CollectionReference getDealsCollection(){
+        return FirebaseFirestore.getInstance().collection("DealsAndPromotions");
+    }
+    public static CollectionReference getShopMenuCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopMenu");
+    }
+    public static CollectionReference getShopLocationCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopLocations");
+    }
 }

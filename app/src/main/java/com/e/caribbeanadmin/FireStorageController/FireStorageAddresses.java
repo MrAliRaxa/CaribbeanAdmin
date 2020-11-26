@@ -17,6 +17,9 @@ public class FireStorageAddresses {
         return FirebaseStorage.getInstance().getReference("Shops")
                 .child("Shop Data").child("Content");
     }
+    public static StorageReference getShopComponents(){
+        return FirebaseStorage.getInstance().getReference("ShopComponents").child("Content");
+    }
 
     public static StorageReference getShopCategoryRef(){
         return FirebaseStorage.getInstance().getReference("ShopCategories")
