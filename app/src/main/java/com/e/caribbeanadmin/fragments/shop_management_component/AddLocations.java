@@ -1,8 +1,10 @@
 package com.e.caribbeanadmin.fragments.shop_management_component;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -27,7 +29,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 
-import www.sanju.motiontoast.MotionToast;
+import es.dmoral.toasty.Toasty;
+
 
 
 public class AddLocations extends Fragment {
@@ -56,12 +59,23 @@ public class AddLocations extends Fragment {
         // Inflate the layout for this fragment
         mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_locations, container, false);
 
+        mDataBinding.addLocationsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+            }
+        });
         mDataBinding.addLocationPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(imageUri==null){
-                    MotionToast.Companion.createToast(getActivity(),"Fail","Shop Location Image Not Selected",MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
+                    Toasty.error(getContext(), "Location Image Not Selected ", Toast.LENGTH_SHORT, true).show();
+
+                    //MotionToast.Companion.createToast(getActivity(),"Fail","Shop Location Image Not Selected",MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
                 }else if(mDataBinding.addLocationShopName.getText().toString().isEmpty()){
                     mDataBinding.addLocationShopName.setError("Empty Not Allowed");
                 }else if(mDataBinding.addLocationLat.getText().toString().isEmpty()){
@@ -85,13 +99,14 @@ public class AddLocations extends Fragment {
                                     DatabaseUploader.publishShopLocation(shopLocation, new OnTaskCompleteListeners() {
                                         @Override
                                         public void onTaskSuccess() {
-                                            MotionToast.Companion.createToast(getActivity(),"Success","Shop Location Added",MotionToast.TOAST_SUCCESS,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
-
+                                           // MotionToast.Companion.createToast(getActivity(),"Success",,MotionToast.TOAST_SUCCESS,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
+                                            Toasty.success(getContext(), "Shop Location Added", Toast.LENGTH_SHORT, true).show();
                                         }
 
                                         @Override
                                         public void onTaskFail(String e) {
-                                            MotionToast.Companion.createToast(getActivity(),"Error",e,MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
+                                           // MotionToast.Companion.createToast(getActivity(),"Error",e,MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
+                                            Toasty.error(getContext(), "Error "+e, Toast.LENGTH_SHORT, true).show();
 
                                         }
                                     });
@@ -114,5 +129,16 @@ public class AddLocations extends Fragment {
             }
         });
         return mDataBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1){
+            if(data!=null&&data.getData()!=null){
+                imageUri=data.getData();
+                mDataBinding.addLocationsImage.setImageURI(imageUri);
+            }
+        }
     }
 }

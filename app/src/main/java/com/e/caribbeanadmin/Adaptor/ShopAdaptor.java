@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.e.caribbeanadmin.Activities.ShopComponentManagement;
+import com.e.caribbeanadmin.Listeners.OnCategoryLoadListeners;
 import com.e.caribbeanadmin.R;
+import com.e.caribbeanadmin.Repository.Repository;
+import com.e.caribbeanadmin.Util.GenericMethods;
 import com.e.caribbeanadmin.dataModel.Shop;
+import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
 import com.e.caribbeanadmin.databinding.ShopManagementRowBinding;
 
 import java.util.List;
@@ -47,6 +51,24 @@ public class ShopAdaptor extends RecyclerView.Adapter<ShopAdaptor.ViewHolder> {
                 Intent intent=new Intent(context, ShopComponentManagement.class);
                 intent.putExtra("shop",shops.get(position));
                 context.startActivity(intent);
+            }
+        });
+        Repository.getShopCategory(shops.get(position).getCategoryId(), new OnCategoryLoadListeners() {
+            @Override
+            public void onCategoriesLoaded(ShopCategoryModel shopCategoryModel) {
+                String s=GenericMethods.shopTypeToString(shopCategoryModel.getViewType());
+                holder.binding.shopType.setText("("+s+")");
+            }
+
+            @Override
+            public void onEmpty() {
+                holder.binding.shopType.setText("Shop Not Found");
+            }
+
+            @Override
+            public void onFailure(String e) {
+                holder.binding.shopType.setText("Error");
+
             }
         });
     }

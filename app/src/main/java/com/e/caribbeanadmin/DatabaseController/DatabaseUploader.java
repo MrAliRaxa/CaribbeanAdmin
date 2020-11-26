@@ -131,7 +131,7 @@ public class DatabaseUploader {
     }
 
     public static void publishShopLocation(ShopLocation shopLocation,OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getShopMenuCollection().document(shopLocation.getId()).set(shopLocation)
+        DatabaseAddresses.getShopLocationCollection().document(shopLocation.getId()).set(shopLocation)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

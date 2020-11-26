@@ -40,7 +40,7 @@
                         android:id="@+id/addLocation_shopName"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Shop Name"
+                        android:hint="Location Name"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
