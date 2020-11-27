@@ -19,6 +19,7 @@ import com.e.caribbeanadmin.databinding.ActivityShopComponentManagementBinding;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddDealsAndPromotions;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddLocations;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddMenu;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddShopInformation;
 
 public class ShopComponentManagement extends AppCompatActivity {
 
@@ -46,25 +47,21 @@ public class ShopComponentManagement extends AppCompatActivity {
 
                     mDataBinding.addDealsAndPromotions.setOnClickListener(v->{
                         AddDealsAndPromotions dealsAndPromotions=new AddDealsAndPromotions();
-                        Bundle bundle=new Bundle();
-                        bundle.putParcelable("shop",shop);
-                        dealsAndPromotions.setArguments(bundle);
                         replaceFragment(dealsAndPromotions);
                     });
                     mDataBinding.addMenu.setOnClickListener(v->{
                         AddMenu addMenu=new AddMenu();
-                        Bundle bundle=new Bundle();
-                        bundle.putParcelable("shop",shop);
-                        addMenu.setArguments(bundle);
                         replaceFragment(addMenu);
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
                         AddLocations locations=new AddLocations();
-                        Bundle bundle=new Bundle();
-                        bundle.putParcelable("shop",shop);
-                        locations.setArguments(bundle);
                         replaceFragment(locations);
-                        Log.d(TAG, "onCategoriesLoaded: ");
+                    });
+                    mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddShopInformation());
+                        }
                     });
 
 
@@ -128,6 +125,9 @@ public class ShopComponentManagement extends AppCompatActivity {
 
 
     private void replaceFragment(Fragment fragment){
+        Bundle bundle=new Bundle();
+        bundle.putParcelable("shop",shop);
+        fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.shopContainer,fragment).addToBackStack(null)
                 .commit();
     }

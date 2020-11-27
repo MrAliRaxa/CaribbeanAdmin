@@ -8,6 +8,7 @@ import com.e.caribbeanadmin.dataModel.Item;
 import com.e.caribbeanadmin.dataModel.MenuItem;
 import com.e.caribbeanadmin.dataModel.Shop;
 import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.dataModel.ShopInformationModel;
 import com.e.caribbeanadmin.dataModel.ShopLocation;
 import com.e.caribbeanadmin.dataModel.SliderContent;
 import com.e.caribbeanadmin.dataModel.UserProfile;
@@ -132,6 +133,20 @@ public class DatabaseUploader {
 
     public static void publishShopLocation(ShopLocation shopLocation,OnTaskCompleteListeners onTaskCompleteListeners){
         DatabaseAddresses.getShopLocationCollection().document(shopLocation.getId()).set(shopLocation)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onTaskCompleteListeners.onTaskSuccess();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onTaskCompleteListeners.onTaskFail(e.getMessage());
+            }
+        });
+    }
+    public static void publishShopInformation(ShopInformationModel shopInformationModel, OnTaskCompleteListeners onTaskCompleteListeners){
+        DatabaseAddresses.getShopInformationCollection().document(shopInformationModel.getShopId()).set(shopInformationModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

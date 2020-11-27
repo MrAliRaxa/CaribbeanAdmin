@@ -44,4 +44,8 @@ public class DatabaseAddresses {
     public static CollectionReference getShopLocationCollection(){
         return FirebaseFirestore.getInstance().collection("ShopLocations");
     }
+
+    public static CollectionReference getShopInformationCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopInformation");
+    }
 }

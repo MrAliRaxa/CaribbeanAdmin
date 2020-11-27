@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("please wait . . .");
+        progressDialog.setCanceledOnTouchOutside(false);
         activityLoginBinding= DataBindingUtil.setContentView(LoginActivity.this,R.layout.activity_login);
         activityLoginBinding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,16 +85,19 @@ public class LoginActivity extends AppCompatActivity {
         authStateListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                progressDialog.show();
                 if(firebaseAuth.getCurrentUser()!=null){
                     Repository.getMyProfile(firebaseAuth.getUid(), new OnUserProfileLoadListeners() {
                         @Override
                         public void onUserProfileLoaded(UserProfile userProfile) {
                             CurrentUser.setUserProfile(userProfile);
+                            progressDialog.dismiss();
                             startDashboard();
                         }
                         @Override
                         public void onFailure(String e) {
                             Toast.makeText(LoginActivity.this, "Invalid User", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                     });
 

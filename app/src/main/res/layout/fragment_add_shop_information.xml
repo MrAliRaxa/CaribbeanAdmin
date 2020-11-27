@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragments.shop_management_component.AddShopInformation"
@@ -25,6 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="About Us"
+                    android:id="@+id/addShopInformation_aboutUs"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,7 +35,9 @@
                 android:text="Timing"
                 android:textStyle="bold"
                 android:textSize="20sp"
+                android:layout_margin="10dp"
                 />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,22 +60,24 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
+
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mondayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Open Date"
-                            />
+                            android:hint="Open Date" />
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mondayCloseTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
@@ -103,10 +108,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tuesdayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Open Date"
@@ -115,10 +121,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tuesdayCloseTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
@@ -149,10 +156,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/wednesdayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Open Date"
@@ -161,10 +169,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/wednesdayCloseTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
@@ -195,10 +204,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/thursdayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Open Date"
@@ -207,10 +217,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/thursdayCloseTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
@@ -241,10 +252,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fridayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Open Date"
@@ -253,10 +265,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fridayCloseTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
@@ -287,10 +300,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/saturdayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Open Date"
@@ -299,10 +313,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/saturdayCloseTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
@@ -333,10 +348,11 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sundayOpenTime"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Open Date"
@@ -345,18 +361,99 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_weight=".4"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_margin="10dp"
                         >
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Close Date"
+                            android:id="@+id/sundayCloseTime"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Us"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_margin="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    >
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight=".4"
+                        android:layout_height="60dp"
+                        android:layout_margin="10dp"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/contactUsEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Email"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    >
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Phone"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight=".4"
+                        android:layout_height="60dp"
+                        android:layout_margin="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/contactUsPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/publishShopInformation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="Publish Shop Information"
+                />
         </LinearLayout>
 
 
