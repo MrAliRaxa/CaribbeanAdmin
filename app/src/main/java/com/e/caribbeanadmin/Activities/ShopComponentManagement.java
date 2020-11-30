@@ -17,9 +17,11 @@ import com.e.caribbeanadmin.dataModel.Shop;
 import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
 import com.e.caribbeanadmin.databinding.ActivityShopComponentManagementBinding;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddDealsAndPromotions;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddDirectory;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddLocations;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddMenu;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddShopInformation;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddStore;
 
 public class ShopComponentManagement extends AppCompatActivity {
 
@@ -43,8 +45,6 @@ public class ShopComponentManagement extends AppCompatActivity {
                     mDataBinding.addMenu.setVisibility(View.VISIBLE);
                     mDataBinding.addLocations.setVisibility(View.VISIBLE);
                     mDataBinding.addInformation.setVisibility(View.VISIBLE);
-
-
                     mDataBinding.addDealsAndPromotions.setOnClickListener(v->{
                         AddDealsAndPromotions dealsAndPromotions=new AddDealsAndPromotions();
                         replaceFragment(dealsAndPromotions);
@@ -65,6 +65,8 @@ public class ShopComponentManagement extends AppCompatActivity {
                     });
 
 
+
+
                 }else if(shopCategoryModel.getViewType()== ShopType.DSLI){
                     mDataBinding.addDealsAndPromotions.setVisibility(View.VISIBLE);
                     mDataBinding.addShowroom.setVisibility(View.VISIBLE);
@@ -78,6 +80,18 @@ public class ShopComponentManagement extends AppCompatActivity {
                 }else if(shopCategoryModel.getViewType()== ShopType.DS){
                     mDataBinding.addDirectory.setVisibility(View.VISIBLE);
                     mDataBinding.addStores.setVisibility(View.VISIBLE);
+                    mDataBinding.addDirectory.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddDirectory());
+                        }
+                    });
+                    mDataBinding.addStores.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddStore());
+                        }
+                    });
                 } else if(shopCategoryModel.getViewType()== ShopType.WABI){
                     mDataBinding.addWebsite.setVisibility(View.VISIBLE);
                     mDataBinding.addAtmLocations.setVisibility(View.VISIBLE);

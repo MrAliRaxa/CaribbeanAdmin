@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
@@ -35,7 +37,6 @@ public class DatabaseUploader {
             }
         });
     }
-
     public static void publishNewCategory(ShopCategoryModel shopCategoryModel,OnTaskCompleteListeners onTaskCompleteListeners){
         DatabaseAddresses.getShopCategoryCollection().document(shopCategoryModel.getId()).set(shopCategoryModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -103,8 +104,8 @@ public class DatabaseUploader {
             }
         });
     }
-    public static void publishDeal(Item item,OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getDealsCollection().document(item.getId()).set(item).addOnSuccessListener(new OnSuccessListener<Void>() {
+    public static void publishItem(Item item, CollectionReference collectionReference, OnTaskCompleteListeners onTaskCompleteListeners){
+        collectionReference.document(item.getId()).set(item).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 onTaskCompleteListeners.onTaskSuccess();
@@ -116,8 +117,8 @@ public class DatabaseUploader {
             }
         });
     }
-    public static void publishMenu(MenuItem menuItem,OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getShopMenuCollection().document(menuItem.getShopId()).set(menuItem)
+    public static void publishMenu(MenuItem menuItem,CollectionReference reference,OnTaskCompleteListeners onTaskCompleteListeners){
+        reference.document(menuItem.getShopId()).set(menuItem)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -130,7 +131,6 @@ public class DatabaseUploader {
             }
         });
     }
-
     public static void publishShopLocation(ShopLocation shopLocation,OnTaskCompleteListeners onTaskCompleteListeners){
         DatabaseAddresses.getShopLocationCollection().document(shopLocation.getId()).set(shopLocation)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

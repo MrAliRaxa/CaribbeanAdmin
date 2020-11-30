@@ -7,7 +7,7 @@
         android:background="@android:color/white"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".fragments.shop_management_component.AddDealsAndPromotions">
+        tools:context=".fragments.shop_management_component.AddStore">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/deals"
@@ -18,7 +18,18 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:text="Add new Deal"
+            android:text="Add Store Item"
+            />
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Not Found"
+            android:visibility="gone"
+            android:id="@+id/addStores_msg"
             />
     </RelativeLayout>
+
+
 </layout>
+

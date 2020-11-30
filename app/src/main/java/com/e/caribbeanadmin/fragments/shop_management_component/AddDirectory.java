@@ -21,21 +21,19 @@ import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.dataModel.MenuItem;
 import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.databinding.FragmentAddMenuBinding;
+import com.e.caribbeanadmin.databinding.FragmentAddDirectoryBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 
 
-public class AddMenu extends Fragment {
+public class AddDirectory extends Fragment {
 
-
-    private FragmentAddMenuBinding mDataBinding;
     private Shop shop;
     private Uri imageUri;
-
-    public AddMenu() {
+    private FragmentAddDirectoryBinding mDataBinding;
+    public AddDirectory() {
         // Required empty public constructor
     }
 
@@ -53,8 +51,7 @@ public class AddMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_menu, container, false);
-
+        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_directory, container, false);
         mDataBinding.addMenuAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +81,8 @@ public class AddMenu extends Fragment {
                                     DatabaseUploader.publishMenu(menuItem, DatabaseAddresses.getShopDirectoryCollection(), new OnTaskCompleteListeners() {
                                         @Override
                                         public void onTaskSuccess() {
-                                            Toast.makeText(getContext(), "Menu Published", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Item Published", Toast.LENGTH_SHORT).show();
+                                            getActivity().getSupportFragmentManager().popBackStack();
                                         }
 
                                         @Override

@@ -10,12 +10,16 @@ public class DatabaseAddresses {
         return FirebaseFirestore.getInstance().collection("UserAccounts")
                 .document(docId);
     }
-
+    public static CollectionReference getShopStoreCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopStoreItemCollection");
+    }
     public static DocumentReference getCountriesCollection(String docId){
         return FirebaseFirestore.getInstance().collection("CountriesCollection")
                 .document(docId);
     }
-
+    public static CollectionReference getShopDirectoryCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopDirectoryItemCollection");
+    }
     public static DocumentReference getShopDocument(String docId){
         return FirebaseFirestore.getInstance().collection("ShopCollection")
                 .document(docId);

@@ -82,6 +82,8 @@ public class AddLocations extends Fragment {
                     mDataBinding.addLocationLat.setError("Empty Not Allowed");
                 }else if(mDataBinding.addLocationLng.getText().toString().isEmpty()){
                     mDataBinding.addLocationLng.setError("Empty Not Allowed ");
+                }else if(mDataBinding.addLocationAddress.getText().toString().isEmpty()){
+                    mDataBinding.addLocationAddress.setError("Empty Not allowed");
                 }else{
                     ShopLocation shopLocation=new ShopLocation();
                     shopLocation.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
@@ -89,6 +91,7 @@ public class AddLocations extends Fragment {
                     shopLocation.setLat(Double.parseDouble(mDataBinding.addLocationLat.getText().toString()));
                     shopLocation.setLng(Double.parseDouble(mDataBinding.addLocationLng.getText().toString()));
                     shopLocation.setName(mDataBinding.addLocationShopName.getText().toString());
+                    shopLocation.setShopAddress(mDataBinding.addLocationAddress.getText().toString());
                     FireStoreUploader.uploadPhotos(imageUri, new OnFileUploadListeners() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

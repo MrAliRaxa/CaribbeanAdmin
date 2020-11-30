@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class Repository {
     private static final String TAG = "Repository";
@@ -87,7 +88,7 @@ public class Repository {
         });
     }
 
-    public static void getShopDealsAndPromotions(String itemShopId,OnItemLoadListeners onItemLoadListeners){
+         public static void getShopDealsAndPromotions(String itemShopId,OnItemLoadListeners onItemLoadListeners){
         DatabaseAddresses.getDealsCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -115,7 +116,7 @@ public class Repository {
             }
         });
     }
-    public static void getShopCategories(OnShopCategoryLoadListeners onShopCategoryLoadListeners){
+         public static void getShopCategories(OnShopCategoryLoadListeners onShopCategoryLoadListeners){
             DatabaseAddresses.getShopCategoryCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -138,7 +139,6 @@ public class Repository {
                 }
             });
         }
-
         public static void getShopMenuCategories(String shopId, OnMenuItemLoadListeners onMenuItemLoadListeners){
             DatabaseAddresses.getShopMenuCollection().document(shopId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -184,6 +184,37 @@ public class Repository {
                 }
             });
         }
+        public static void getShopStoreItem(String shopId,OnItemLoadListeners onItemLoadListeners){
 
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    DatabaseAddresses.getShopStoreCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<Item> items=new ArrayList<>();
+
+                            for(QueryDocumentSnapshot documentSnapshot:queryDocumentSnapshots){
+                                Item item=documentSnapshot.toObject(Item.class);
+                                if(item.getShopId().equals(shopId)){
+                                    items.add(item);
+                                }
+                            }
+                            if(items.size()>0){
+                                onItemLoadListeners.onItemLoaded(items);
+                            }else{
+                                onItemLoadListeners.onEmpty();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            onItemLoadListeners.onFailure(e.getMessage());
+                        }
+                    });
+                }
+            });
+
+        }
 
 }

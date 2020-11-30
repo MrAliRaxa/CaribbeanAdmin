@@ -85,11 +85,9 @@ public class AddDealsAndPromotions extends Fragment {
 
             }
         });
-        mDataBinding.addNewDeal.setOnClickListener(v->{
+        mDataBinding.addNewItem.setOnClickListener(v->{
 
             addDealsDialog.show();
-
-
 
         });
         dealsBinding.addDealsImage.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +100,7 @@ public class AddDealsAndPromotions extends Fragment {
 
             }
         });
-        dealsBinding.addDealBtn.setOnClickListener(new View.OnClickListener() {
+        dealsBinding.addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(dealsBinding.addDealsContent.getText().toString().isEmpty()){
@@ -122,7 +120,7 @@ public class AddDealsAndPromotions extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     item.setImageUrl(String.valueOf(uri));
-                                    DatabaseUploader.publishDeal(item, new OnTaskCompleteListeners() {
+                                    DatabaseUploader.publishItem(item, DatabaseAddresses.getDealsCollection(), new OnTaskCompleteListeners() {
                                         @Override
                                         public void onTaskSuccess() {
                                             Toast.makeText(getContext(), "Deal Added", Toast.LENGTH_SHORT).show();
