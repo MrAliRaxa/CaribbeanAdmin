@@ -1,6 +1,6 @@
 package com.e.caribbeanadmin.Util;
 
-import com.e.caribbeanadmin.dataModel.UserProfile;
+import com.e.caribbeanadmin.data_model.UserProfile;
 import com.e.caribbeanadmin.Exceptions.CurrentUserNotFoundException;
 
 public class CurrentUser {

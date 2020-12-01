@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
 import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
@@ -23,7 +22,7 @@ import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.data_model.ShopLocation;
-import com.e.caribbeanadmin.databinding.FragmentAddLocationsBinding;
+import com.e.caribbeanadmin.databinding.FragmentAddBankLocationsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 
@@ -32,22 +31,19 @@ import java.util.Calendar;
 import es.dmoral.toasty.Toasty;
 
 
-
-public class AddLocations extends Fragment {
+public class AddBankLocations extends Fragment {
 
     private Uri imageUri;
     private Shop shop;
-    private FragmentAddLocationsBinding mDataBinding;
-    public AddLocations() {
+    private FragmentAddBankLocationsBinding mDataBinding;
+    public AddBankLocations() {
         // Required empty public constructor
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if(getArguments()!=null){
             shop=getArguments().getParcelable("shop");
         }
@@ -57,7 +53,7 @@ public class AddLocations extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_locations, container, false);
+        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_bank_locations, container, false);
 
         mDataBinding.addLocationsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,16 +95,17 @@ public class AddLocations extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     shopLocation.setImageUrl(String.valueOf(uri));
-                                    DatabaseUploader.publishShopLocation(shopLocation, DatabaseAddresses.getShopLocationCollection(), new OnTaskCompleteListeners() {
+                                    DatabaseUploader.publishShopLocation(shopLocation, DatabaseAddresses.getBankCollection(), new OnTaskCompleteListeners() {
                                         @Override
                                         public void onTaskSuccess() {
-                                           // MotionToast.Companion.createToast(getActivity(),"Success",,MotionToast.TOAST_SUCCESS,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
-                                            Toasty.success(getContext(), "Shop Location Added", Toast.LENGTH_SHORT, true).show();
+                                            getActivity().getSupportFragmentManager().popBackStack();
+                                            // MotionToast.Companion.createToast(getActivity(),"Success",,MotionToast.TOAST_SUCCESS,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
+                                            Toasty.success(getContext(), "Location Added", Toast.LENGTH_SHORT, true).show();
                                         }
 
                                         @Override
                                         public void onTaskFail(String e) {
-                                           // MotionToast.Companion.createToast(getActivity(),"Error",e,MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
+                                            // MotionToast.Companion.createToast(getActivity(),"Error",e,MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
                                             Toasty.error(getContext(), "Error "+e, Toast.LENGTH_SHORT, true).show();
 
                                         }

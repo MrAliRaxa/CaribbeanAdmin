@@ -9,13 +9,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.e.caribbeanadmin.Adaptor.ShopCategorySpinnerAdaptor;
 import com.e.caribbeanadmin.Constants.ShopType;
-import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.Shop;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
@@ -27,7 +26,6 @@ import com.e.caribbeanadmin.Repository.Repository;
 import com.e.caribbeanadmin.Util.DialogBuilder;
 import com.e.caribbeanadmin.Util.GenericMethods;
 import com.e.caribbeanadmin.databinding.ActivityAddNewShopBinding;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 

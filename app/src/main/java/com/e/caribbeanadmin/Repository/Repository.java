@@ -9,17 +9,19 @@ import com.e.caribbeanadmin.Listeners.OnItemLoadListeners;
 import com.e.caribbeanadmin.Listeners.OnMenuItemLoadListeners;
 import com.e.caribbeanadmin.Listeners.OnShopLoadListeners;
 import com.e.caribbeanadmin.Listeners.OnShopLocationLoadListeners;
-import com.e.caribbeanadmin.dataModel.Item;
-import com.e.caribbeanadmin.dataModel.MenuItem;
-import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
-import com.e.caribbeanadmin.dataModel.ShopLocation;
-import com.e.caribbeanadmin.dataModel.UserProfile;
+import com.e.caribbeanadmin.Listeners.OnStringLoadListeners;
+import com.e.caribbeanadmin.data_model.Item;
+import com.e.caribbeanadmin.data_model.MenuItem;
+import com.e.caribbeanadmin.data_model.Shop;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.ShopLocation;
+import com.e.caribbeanadmin.data_model.UserProfile;
 import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.Listeners.OnShopCategoryLoadListeners;
 import com.e.caribbeanadmin.Listeners.OnUserProfileLoadListeners;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -87,9 +89,8 @@ public class Repository {
             }
         });
     }
-
-         public static void getShopDealsAndPromotions(String itemShopId,OnItemLoadListeners onItemLoadListeners){
-        DatabaseAddresses.getDealsCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    public static void getShopItems(String itemShopId, CollectionReference reference, OnItemLoadListeners onItemLoadListeners){
+        reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 List<Item> items=new ArrayList<>();
@@ -116,7 +117,7 @@ public class Repository {
             }
         });
     }
-         public static void getShopCategories(OnShopCategoryLoadListeners onShopCategoryLoadListeners){
+    public static void getShopCategories(OnShopCategoryLoadListeners onShopCategoryLoadListeners){
             DatabaseAddresses.getShopCategoryCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -139,7 +140,7 @@ public class Repository {
                 }
             });
         }
-        public static void getShopMenuCategories(String shopId, OnMenuItemLoadListeners onMenuItemLoadListeners){
+    public static void getShopMenuCategories(String shopId, OnMenuItemLoadListeners onMenuItemLoadListeners){
             DatabaseAddresses.getShopMenuCollection().document(shopId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -157,34 +158,38 @@ public class Repository {
             });
 
         }
-        public static void getShopLocations(String shopId, OnShopLocationLoadListeners onShopLocationLoadListeners){
-            DatabaseAddresses.getShopLocationCollection().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+    public static void getLocations(String shopId,CollectionReference reference, OnShopLocationLoadListeners onShopLocationLoadListeners){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                    List<ShopLocation> shopLocations=new ArrayList<>();
-                    for(QueryDocumentSnapshot documentSnapshot:queryDocumentSnapshots){
-                        ShopLocation location=documentSnapshot.toObject(ShopLocation.class);
-                        if(location.getShopId().equals(shopId)){
-                            shopLocations.add(location);
+                        List<ShopLocation> shopLocations=new ArrayList<>();
+                        for(QueryDocumentSnapshot documentSnapshot:queryDocumentSnapshots){
+                            ShopLocation location=documentSnapshot.toObject(ShopLocation.class);
+                            if(location.getShopId().equals(shopId)){
+                                shopLocations.add(location);
 
+                            }
+                        }
+
+                        if(shopLocations.size()>0){
+                            onShopLocationLoadListeners.onLocationsLoaded(shopLocations);
+                        }else{
+                            onShopLocationLoadListeners.onEmpty();
                         }
                     }
-
-                    if(shopLocations.size()>0){
-                        onShopLocationLoadListeners.onLocationsLoaded(shopLocations);
-                    }else{
-                        onShopLocationLoadListeners.onEmpty();
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onShopLocationLoadListeners.onFailure(e.getMessage());
                     }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    onShopLocationLoadListeners.onFailure(e.getMessage());
-                }
-            });
-        }
-        public static void getShopStoreItem(String shopId,OnItemLoadListeners onItemLoadListeners){
+                });
+            }
+        }); }
+    public static void getShopStoreItem(String shopId,OnItemLoadListeners onItemLoadListeners){
 
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -216,5 +221,50 @@ public class Repository {
             });
 
         }
+    public static void getShopDirectory(String shopId,OnMenuItemLoadListeners onMenuItemLoadListeners){
 
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseAddresses.getShopDirectoryCollection().document(shopId)
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            onMenuItemLoadListeners.onMenuLoaded(documentSnapshot.toObject(MenuItem.class));
+                        }else{
+                            onMenuItemLoadListeners.onEmpty();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        onMenuItemLoadListeners.onFailure(e.getMessage());
+                    }
+                });
+            }
+        });
+
+
+        }
+        public static void getShopWebsite(String shopId, OnStringLoadListeners onStringLoadListeners){
+
+        DatabaseAddresses.getShopWebsiteCollection().document(shopId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            onStringLoadListeners.onStringLoaded(documentSnapshot.getString("WebUrl"));
+                        }else {
+                            onStringLoadListeners.onEmpty();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onStringLoadListeners.onFailure(e.getMessage());
+            }
+        });
+
+        }
 }

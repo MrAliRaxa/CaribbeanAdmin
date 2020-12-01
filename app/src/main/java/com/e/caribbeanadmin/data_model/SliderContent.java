@@ -1,4 +1,4 @@
-package com.e.caribbeanadmin.dataModel;
+package com.e.caribbeanadmin.data_model;
 
 import java.util.ArrayList;
 import java.util.List;

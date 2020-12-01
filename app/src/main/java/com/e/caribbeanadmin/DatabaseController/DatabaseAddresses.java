@@ -13,6 +13,22 @@ public class DatabaseAddresses {
     public static CollectionReference getShopStoreCollection(){
         return FirebaseFirestore.getInstance().collection("ShopStoreItemCollection");
     }
+    public static CollectionReference getShopShowroomCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopShowroomItemCollection");
+    }
+    public static CollectionReference getShopPricesCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopPricesItemCollection");
+    }
+    public static CollectionReference getShopWebsiteCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopWebsiteItemCollection");
+    }
+
+    public static CollectionReference getShopATMCollection(){
+        return FirebaseFirestore.getInstance().collection("ShopATMCollection");
+    }
+    public static CollectionReference getBankCollection(){
+        return FirebaseFirestore.getInstance().collection("BankLocationCollection");
+    }
     public static DocumentReference getCountriesCollection(String docId){
         return FirebaseFirestore.getInstance().collection("CountriesCollection")
                 .document(docId);

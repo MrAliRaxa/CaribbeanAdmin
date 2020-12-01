@@ -1,4 +1,4 @@
-package com.e.caribbeanadmin.dataModel;
+package com.e.caribbeanadmin.data_model;
 
 public class Country {
     private CountryInformation information;

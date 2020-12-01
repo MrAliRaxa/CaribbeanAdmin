@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
-import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.dataModel.ShopInformationModel;
+import com.e.caribbeanadmin.data_model.Shop;
+import com.e.caribbeanadmin.data_model.ShopInformationModel;
 import com.e.caribbeanadmin.databinding.FragmentAddShopInformationBinding;
 
 import java.util.Calendar;

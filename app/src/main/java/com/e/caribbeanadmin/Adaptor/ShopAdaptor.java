@@ -16,8 +16,8 @@ import com.e.caribbeanadmin.Listeners.OnCategoryLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
 import com.e.caribbeanadmin.Util.GenericMethods;
-import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.Shop;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.databinding.ShopManagementRowBinding;
 
 import java.util.List;

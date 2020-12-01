@@ -3,24 +3,24 @@ package com.e.caribbeanadmin.DatabaseController;
 import androidx.annotation.NonNull;
 
 
-import com.e.caribbeanadmin.dataModel.Country;
-import com.e.caribbeanadmin.dataModel.Item;
-import com.e.caribbeanadmin.dataModel.MenuItem;
-import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
-import com.e.caribbeanadmin.dataModel.ShopInformationModel;
-import com.e.caribbeanadmin.dataModel.ShopLocation;
-import com.e.caribbeanadmin.dataModel.SliderContent;
-import com.e.caribbeanadmin.dataModel.UserProfile;
+import com.e.caribbeanadmin.data_model.Country;
+import com.e.caribbeanadmin.data_model.Item;
+import com.e.caribbeanadmin.data_model.MenuItem;
+import com.e.caribbeanadmin.data_model.Shop;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.ShopInformationModel;
+import com.e.caribbeanadmin.data_model.ShopLocation;
+import com.e.caribbeanadmin.data_model.SliderContent;
+import com.e.caribbeanadmin.data_model.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatabaseUploader {
 
@@ -131,8 +131,8 @@ public class DatabaseUploader {
             }
         });
     }
-    public static void publishShopLocation(ShopLocation shopLocation,OnTaskCompleteListeners onTaskCompleteListeners){
-        DatabaseAddresses.getShopLocationCollection().document(shopLocation.getId()).set(shopLocation)
+    public static void publishShopLocation(ShopLocation shopLocation,CollectionReference reference,OnTaskCompleteListeners onTaskCompleteListeners){
+        reference.document(shopLocation.getId()).set(shopLocation)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -147,6 +147,22 @@ public class DatabaseUploader {
     }
     public static void publishShopInformation(ShopInformationModel shopInformationModel, OnTaskCompleteListeners onTaskCompleteListeners){
         DatabaseAddresses.getShopInformationCollection().document(shopInformationModel.getShopId()).set(shopInformationModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onTaskCompleteListeners.onTaskSuccess();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                onTaskCompleteListeners.onTaskFail(e.getMessage());
+            }
+        });
+    }
+    public static void publishWebsite(String shopId,String websiteLink,OnTaskCompleteListeners onTaskCompleteListeners){
+        Map<String,Object> map=new HashMap<>();
+        map.put("WebUrl",websiteLink);
+        DatabaseAddresses.getShopWebsiteCollection().document(shopId).set(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

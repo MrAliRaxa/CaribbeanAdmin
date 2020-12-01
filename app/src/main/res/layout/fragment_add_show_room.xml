@@ -4,29 +4,30 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:clickable="true"
-        android:focusable="true"
-        tools:context=".fragments.shop_management_component.AddDealsAndPromotions">
+        android:background="@color/white"
+        tools:context=".fragments.shop_management_component.AddShowRoom">
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/deals"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:id="@+id/showroomRecyclerView"
+            android:layout_above="@id/addNewShowRoomItem"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No Item Found"
-            android:id="@+id/deals_msg"
+            android:text="Item Not Found"
             android:layout_centerInParent="true"
+            android:id="@+id/showroom_msg"
             android:visibility="gone"
             />
         <Button
-            android:id="@+id/addNewItem"
+            android:id="@+id/addNewShowRoomItem"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:text="Add New Item"
             android:layout_alignParentBottom="true"
-            android:text="Add new Deal"
             />
     </RelativeLayout>
 </layout>

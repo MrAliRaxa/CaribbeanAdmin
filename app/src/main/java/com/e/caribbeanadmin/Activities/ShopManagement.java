@@ -11,7 +11,7 @@ import com.e.caribbeanadmin.Adaptor.ShopAdaptor;
 import com.e.caribbeanadmin.Listeners.OnShopLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
-import com.e.caribbeanadmin.dataModel.Shop;
+import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.databinding.ActivityShopManagementBinding;
 
 import java.util.List;

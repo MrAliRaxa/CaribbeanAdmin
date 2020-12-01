@@ -10,9 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.DatabaseController.DatabaseUploader;
 import com.e.caribbeanadmin.FireStorageController.FireStorageAddresses;
 import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;

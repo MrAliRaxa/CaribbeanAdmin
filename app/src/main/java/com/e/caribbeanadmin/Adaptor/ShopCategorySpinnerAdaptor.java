@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import androidx.databinding.DataBindingUtil;
 
 import com.e.caribbeanadmin.Util.GenericMethods;
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.databinding.ShopCategoryViewLayoutBinding;
 

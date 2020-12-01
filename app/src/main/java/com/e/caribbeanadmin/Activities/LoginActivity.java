@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.e.caribbeanadmin.dataModel.UserProfile;
+import com.e.caribbeanadmin.data_model.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnUserProfileLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("please wait . . .");
         progressDialog.setCanceledOnTouchOutside(false);
         activityLoginBinding= DataBindingUtil.setContentView(LoginActivity.this,R.layout.activity_login);
+
         activityLoginBinding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +102,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
+                }else{
+                    progressDialog.dismiss();
                 }
 
             }

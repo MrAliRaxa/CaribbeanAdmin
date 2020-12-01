@@ -23,7 +23,7 @@ import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Util.DialogBuilder;
 import com.e.caribbeanadmin.Util.GenericMethods;
-import com.e.caribbeanadmin.dataModel.SliderContent;
+import com.e.caribbeanadmin.data_model.SliderContent;
 import com.e.caribbeanadmin.databinding.ActivityAddShopsSliderBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;

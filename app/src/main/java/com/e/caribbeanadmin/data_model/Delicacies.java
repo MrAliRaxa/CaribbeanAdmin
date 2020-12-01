@@ -1,9 +1,9 @@
-package com.e.caribbeanadmin.dataModel;
+package com.e.caribbeanadmin.data_model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReligionAndCulture {
+public class Delicacies{
 
     private List<String> sliderContent;
     private String description;
@@ -20,7 +20,7 @@ public class ReligionAndCulture {
         this.sliderType = sliderType;
     }
 
-    public ReligionAndCulture() {
+    public Delicacies() {
         sliderContent =new ArrayList<>();
     }
 

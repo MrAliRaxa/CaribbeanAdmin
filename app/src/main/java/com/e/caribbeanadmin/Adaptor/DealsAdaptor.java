@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.e.caribbeanadmin.R;
-import com.e.caribbeanadmin.dataModel.Item;
+import com.e.caribbeanadmin.data_model.Item;
 import com.e.caribbeanadmin.databinding.DealsPromotionsRowBinding;
 
 import java.util.List;

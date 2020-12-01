@@ -1,10 +1,9 @@
-package com.e.caribbeanadmin.dataModel;
+package com.e.caribbeanadmin.data_model;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.android.gms.maps.model.LatLng;
 public class Shop implements Parcelable {
     private String name;
     private String logoUrl;

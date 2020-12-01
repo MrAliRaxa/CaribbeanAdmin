@@ -25,8 +25,8 @@ import com.e.caribbeanadmin.Listeners.OnItemLoadListeners;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
-import com.e.caribbeanadmin.dataModel.Item;
-import com.e.caribbeanadmin.dataModel.Shop;
+import com.e.caribbeanadmin.data_model.Item;
+import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.databinding.AddDealsBinding;
 import com.e.caribbeanadmin.databinding.FragmentAddDealsAndPromotionsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -67,7 +67,7 @@ public class AddDealsAndPromotions extends Fragment {
 
         dealsBinding=DataBindingUtil.inflate(inflater,R.layout.add_deals,null,false);
         AlertDialog addDealsDialog=new AlertDialog.Builder(getContext()).setView(dealsBinding.getRoot()).create();
-        Repository.getShopDealsAndPromotions(shop.getId(), new OnItemLoadListeners() {
+        Repository.getShopItems(shop.getId(),DatabaseAddresses.getDealsCollection(), new OnItemLoadListeners() {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -77,12 +77,13 @@ public class AddDealsAndPromotions extends Fragment {
 
             @Override
             public void onEmpty() {
-
+                mDataBinding.dealsMsg.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFailure(String e) {
-
+                mDataBinding.dealsMsg.setVisibility(View.VISIBLE);
+                mDataBinding.dealsMsg.setText("Error "+e);
             }
         });
         mDataBinding.addNewItem.setOnClickListener(v->{

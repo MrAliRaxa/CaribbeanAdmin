@@ -1,7 +1,7 @@
 package com.e.caribbeanadmin.Listeners;
 
 
-import com.e.caribbeanadmin.dataModel.Shop;
+import com.e.caribbeanadmin.data_model.Shop;
 
 import java.util.List;
 

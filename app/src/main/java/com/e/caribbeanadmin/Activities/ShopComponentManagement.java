@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,15 +12,20 @@ import com.e.caribbeanadmin.Constants.ShopType;
 import com.e.caribbeanadmin.Listeners.OnCategoryLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
-import com.e.caribbeanadmin.dataModel.Shop;
-import com.e.caribbeanadmin.dataModel.ShopCategoryModel;
+import com.e.caribbeanadmin.data_model.Shop;
+import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.databinding.ActivityShopComponentManagementBinding;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddATMLocation;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddBankLocations;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddDealsAndPromotions;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddDirectory;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddLocations;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddMenu;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddPrices;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddShopInformation;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddShowRoom;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddStore;
+import com.e.caribbeanadmin.fragments.shop_management_component.AddWebsite;
 
 public class ShopComponentManagement extends AppCompatActivity {
 
@@ -72,11 +76,61 @@ public class ShopComponentManagement extends AppCompatActivity {
                     mDataBinding.addShowroom.setVisibility(View.VISIBLE);
                     mDataBinding.addLocations.setVisibility(View.VISIBLE);
                     mDataBinding.addInformation.setVisibility(View.VISIBLE);
+
+                    mDataBinding.addDealsAndPromotions.setOnClickListener(v->{
+                        AddDealsAndPromotions dealsAndPromotions=new AddDealsAndPromotions();
+                        replaceFragment(dealsAndPromotions);
+                    });
+                    mDataBinding.addShowroom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddShowRoom());
+
+                        }
+                    });
+                    mDataBinding.addLocations.setOnClickListener(v->{
+                        AddLocations locations=new AddLocations();
+                        replaceFragment(locations);
+                    });
+                    mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddShopInformation());
+                        }
+                    });
+
+
+
                 } else if(shopCategoryModel.getViewType()== ShopType.PSLI){
                     mDataBinding.addPrices.setVisibility(View.VISIBLE);
                     mDataBinding.addShowroom.setVisibility(View.VISIBLE);
                     mDataBinding.addLocations.setVisibility(View.VISIBLE);
                     mDataBinding.addInformation.setVisibility(View.VISIBLE);
+                    mDataBinding.addPrices.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddPrices());
+
+                        }
+                    });
+                    mDataBinding.addShowroom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddShowRoom());
+
+                        }
+                    });
+                    mDataBinding.addLocations.setOnClickListener(v->{
+                        AddLocations locations=new AddLocations();
+                        replaceFragment(locations);
+                    });
+                    mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddShopInformation());
+                        }
+                    });
+
                 }else if(shopCategoryModel.getViewType()== ShopType.DS){
                     mDataBinding.addDirectory.setVisibility(View.VISIBLE);
                     mDataBinding.addStores.setVisibility(View.VISIBLE);
@@ -97,6 +151,25 @@ public class ShopComponentManagement extends AppCompatActivity {
                     mDataBinding.addAtmLocations.setVisibility(View.VISIBLE);
                     mDataBinding.addBankLocations.setVisibility(View.VISIBLE);
                     mDataBinding.addInformation.setVisibility(View.VISIBLE);
+                    mDataBinding.addWebsite.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddWebsite());
+                        }
+                    });
+                    mDataBinding.addAtmLocations.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddATMLocation());
+                        }
+                    });
+
+                    mDataBinding.addBankLocations.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replaceFragment(new AddBankLocations());
+                        }
+                    });
                 }else if(shopCategoryModel.getViewType()== ShopType.SL){
                     mDataBinding.addShowroom.setVisibility(View.VISIBLE);
                     mDataBinding.addLocations.setVisibility(View.VISIBLE);
