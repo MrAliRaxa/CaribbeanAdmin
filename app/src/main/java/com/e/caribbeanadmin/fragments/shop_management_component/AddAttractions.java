@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +28,7 @@ import com.e.caribbeanadmin.Repository.Repository;
 import com.e.caribbeanadmin.data_model.Item;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.databinding.AddDealsBinding;
-import com.e.caribbeanadmin.databinding.FragmentAddStoreBinding;
+import com.e.caribbeanadmin.databinding.FragmentAddAttractionsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 
@@ -37,15 +36,14 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class AddStore extends Fragment {
-
+public class AddAttractions extends Fragment {
 
     private Uri imageUri;
     private Shop shop;
     private AddDealsBinding dealsBinding;
-    private FragmentAddStoreBinding mDataBinding;
-    private static final String TAG = "AddStore";
-    public AddStore() {
+    private FragmentAddAttractionsBinding mDataBinding;
+    private static final String TAG = "AddAttractions";
+    public AddAttractions() {
         // Required empty public constructor
     }
 
@@ -62,29 +60,27 @@ public class AddStore extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_store, container, false);
-
+        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_attractions, container, false);
         dealsBinding=DataBindingUtil.inflate(inflater,R.layout.add_deals,null,false);
 
-        RecyclerView recyclerView=mDataBinding.deals;
         AlertDialog addDealsDialog=new AlertDialog.Builder(getContext()).setView(dealsBinding.getRoot()).create();
-        Repository.getShopStoreItem(shop.getId(), new OnItemLoadListeners() {
+        Repository.getShopItems(shop.getId(), DatabaseAddresses.getAttractionsCollection(), new OnItemLoadListeners() {
             @Override
             public void onItemLoaded(List<Item> itemList) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mDataBinding.activitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList);
-                recyclerView.setAdapter(adaptor);
+                mDataBinding.activitiesRecyclerView.setAdapter(adaptor);
             }
 
             @Override
             public void onEmpty() {
-                mDataBinding.addStoresMsg.setVisibility(View.VISIBLE);
+                mDataBinding.activitiesMsg.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFailure(String e) {
-                mDataBinding.addStoresMsg.setVisibility(View.VISIBLE);
-                mDataBinding.addStoresMsg.setText("Error "+e);
+                mDataBinding.activitiesMsg.setVisibility(View.VISIBLE);
+                mDataBinding.activitiesMsg.setText("Error "+e);
             }
         });
 
@@ -127,7 +123,7 @@ public class AddStore extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     item.setImageUrl(String.valueOf(uri));
-                                    DatabaseUploader.publishItem(item, DatabaseAddresses.getShopStoreCollection(), new OnTaskCompleteListeners() {
+                                    DatabaseUploader.publishItem(item, DatabaseAddresses.getAttractionsCollection(), new OnTaskCompleteListeners() {
                                         @Override
                                         public void onTaskSuccess() {
                                             Toast.makeText(getContext(), "Item Added", Toast.LENGTH_SHORT).show();

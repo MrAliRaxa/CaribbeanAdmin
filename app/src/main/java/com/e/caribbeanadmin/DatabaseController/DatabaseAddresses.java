@@ -29,6 +29,38 @@ public class DatabaseAddresses {
     public static CollectionReference getBankCollection(){
         return FirebaseFirestore.getInstance().collection("BankLocationCollection");
     }
+    public static CollectionReference getActivitiesCollection(){
+        return FirebaseFirestore.getInstance().collection("ActivitiesCollection");
+    }
+    public static CollectionReference getHistoricalCollection(){
+        return FirebaseFirestore.getInstance().collection("HistoricalCollection");
+    }
+    public static CollectionReference getWildLifeCollection(){
+        return FirebaseFirestore.getInstance().collection("WildLifeCollection");
+    }
+    public static CollectionReference getNorthCollection(){
+        return FirebaseFirestore.getInstance().collection("NorthCollection");
+    }
+    public static CollectionReference getSouthCollection(){
+        return FirebaseFirestore.getInstance().collection("SouthCollection");
+    }
+    public static CollectionReference getWestCollection(){
+        return FirebaseFirestore.getInstance().collection("WestCollection");
+    }
+    public static CollectionReference getEastCollection(){
+        return FirebaseFirestore.getInstance().collection("EastCollection");
+    }
+
+    public static CollectionReference getTobagoCollection(){
+        return FirebaseFirestore.getInstance().collection("TobagoCollection");
+    }
+
+    public static CollectionReference getAttractionsCollection(){
+        return FirebaseFirestore.getInstance().collection("AttractionsCollection");
+    }
+    public static CollectionReference getBuildingCollection(){
+        return FirebaseFirestore.getInstance().collection("BuildingCollection");
+    }
     public static DocumentReference getCountriesCollection(String docId){
         return FirebaseFirestore.getInstance().collection("CountriesCollection")
                 .document(docId);

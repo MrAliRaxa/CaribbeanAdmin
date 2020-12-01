@@ -29,26 +29,24 @@ import com.e.caribbeanadmin.Repository.Repository;
 import com.e.caribbeanadmin.data_model.Item;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.databinding.AddDealsBinding;
-import com.e.caribbeanadmin.databinding.FragmentAddStoreBinding;
+import com.e.caribbeanadmin.databinding.FragmentAddBuildingsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.List;
 
-
-public class AddStore extends Fragment {
+public class AddBuildings extends Fragment {
 
 
     private Uri imageUri;
     private Shop shop;
     private AddDealsBinding dealsBinding;
-    private FragmentAddStoreBinding mDataBinding;
-    private static final String TAG = "AddStore";
-    public AddStore() {
+    private FragmentAddBuildingsBinding mDataBinding;
+    private static final String TAG = "AddBuildings";
+    public AddBuildings() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,13 +60,12 @@ public class AddStore extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_store, container, false);
-
+        mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_buildings, container, false);
         dealsBinding=DataBindingUtil.inflate(inflater,R.layout.add_deals,null,false);
 
-        RecyclerView recyclerView=mDataBinding.deals;
+        RecyclerView recyclerView=mDataBinding.buildingsRecyclerView;
         AlertDialog addDealsDialog=new AlertDialog.Builder(getContext()).setView(dealsBinding.getRoot()).create();
-        Repository.getShopStoreItem(shop.getId(), new OnItemLoadListeners() {
+        Repository.getShopItems(shop.getId(),DatabaseAddresses.getBuildingCollection(), new OnItemLoadListeners() {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,13 +75,13 @@ public class AddStore extends Fragment {
 
             @Override
             public void onEmpty() {
-                mDataBinding.addStoresMsg.setVisibility(View.VISIBLE);
+                mDataBinding.buildingsMsg.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFailure(String e) {
-                mDataBinding.addStoresMsg.setVisibility(View.VISIBLE);
-                mDataBinding.addStoresMsg.setText("Error "+e);
+                mDataBinding.buildingsMsg.setVisibility(View.VISIBLE);
+                mDataBinding.buildingsMsg.setText("Error "+e);
             }
         });
 
@@ -127,7 +124,7 @@ public class AddStore extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     item.setImageUrl(String.valueOf(uri));
-                                    DatabaseUploader.publishItem(item, DatabaseAddresses.getShopStoreCollection(), new OnTaskCompleteListeners() {
+                                    DatabaseUploader.publishItem(item, DatabaseAddresses.getBuildingCollection(), new OnTaskCompleteListeners() {
                                         @Override
                                         public void onTaskSuccess() {
                                             Toast.makeText(getContext(), "Item Added", Toast.LENGTH_SHORT).show();
