@@ -37,8 +37,6 @@
                             android:hint="Shop Name"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
-
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -53,9 +51,6 @@
                             android:hint="Contact Number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
-
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -111,7 +106,33 @@
                         />
 
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Visitor"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/localVisitor"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:text="Local"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/touristVisitor"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:text="Tourist"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
+
 
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -214,7 +235,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
             <Button
                 android:id="@+id/publishShop"
                 android:layout_width="match_parent"

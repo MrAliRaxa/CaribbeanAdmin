@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.e.caribbeanadmin.Adaptor.ShopCategorySpinnerAdaptor;
+import com.e.caribbeanadmin.Constants.ShopBoundry;
 import com.e.caribbeanadmin.Constants.ShopType;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.data_model.ShopCategoryModel;
@@ -34,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class AddNewShop extends AppCompatActivity {
 
     private final int SELECT_LOGO_IMAGE=1;
@@ -42,6 +46,7 @@ public class AddNewShop extends AppCompatActivity {
     private Uri logoUri;
     private ActivityAddNewShopBinding mDataBinding;
     private List<ShopCategoryModel> shopCategories;
+    private static final String TAG = "AddNewShop";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +65,25 @@ public class AddNewShop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GenericMethods.getImage(SELECT_BANNER_IMAGE,AddNewShop.this);
+            }
+        });
+
+        mDataBinding.touristVisitor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mDataBinding.localVisitor.setChecked(false);
+                }
+
+            }
+        });
+        mDataBinding.localVisitor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mDataBinding.touristVisitor.setChecked(false);
+                }
+
             }
         });
 
@@ -125,23 +149,31 @@ public class AddNewShop extends AppCompatActivity {
                 }else if(bannerUri==null){
                     Toast.makeText(AddNewShop.this, "Please Add Banner Image", Toast.LENGTH_SHORT).show();
                     return;
+                }else if(!mDataBinding.touristVisitor.isChecked()&&!mDataBinding.localVisitor.isChecked()){
+                    Toasty.error(AddNewShop.this,"No Shop Visitor Selected").show();
+                    return;
                 }
 
 
-               ProgressDialog loading= DialogBuilder.getSimpleLoadingDialog(AddNewShop.this,"Loading","Uploading data ...");
+                Shop shop=new Shop();
+                ProgressDialog loading= DialogBuilder.getSimpleLoadingDialog(AddNewShop.this,"Loading","Uploading data ...");
                 loading.setCanceledOnTouchOutside(false);
                 loading.setCancelable(false);
                 loading.show();
-                Shop shop=new Shop();
+                if(mDataBinding.localVisitor.isChecked()){
+                    shop.setShopVisitor(ShopBoundry.LOCAL);
+                }else if(mDataBinding.touristVisitor.isChecked()){
+                    shop.setShopVisitor(ShopBoundry.TOURIST);
+                }
                 shop.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 shop.setName(mDataBinding.newShopName.getText().toString());
                 shop.setContact(mDataBinding.newShopContactNumber.getText().toString());
                 shop.setCategoryId(shopCategories.get(mDataBinding.newShopCategory.getSelectedItemPosition()-1).getId());
                 shop.setLat(Double.parseDouble(mDataBinding.newShopLat.getText().toString()));
                 shop.setLng(Double.parseDouble(mDataBinding.newShopLng.getText().toString()));
+
+
                 loading.setMessage("Uploading logo image . . .");
-
-
                 FireStoreUploader.uploadPhotos(logoUri, new OnFileUploadListeners() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
