@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.e.caribbeanadmin.Activities.ShopComponentManagement;
+import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.Listeners.OnCategoryLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
@@ -19,6 +21,8 @@ import com.e.caribbeanadmin.Util.GenericMethods;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.databinding.ShopManagementRowBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
@@ -51,6 +55,25 @@ public class ShopAdaptor extends RecyclerView.Adapter<ShopAdaptor.ViewHolder> {
                 Intent intent=new Intent(context, ShopComponentManagement.class);
                 intent.putExtra("shop",shops.get(position));
                 context.startActivity(intent);
+            }
+        });
+        holder.binding.shopDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseAddresses.getShopCollection().document(shops.get(position).getId())
+                        .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        shops.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeRemoved(position,shops.size());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Unable to remove", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         Repository.getShopCategory(shops.get(position).getCategoryId(), new OnCategoryLoadListeners() {

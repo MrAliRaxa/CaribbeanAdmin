@@ -68,7 +68,7 @@ public class AddAttractions extends Fragment {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 mDataBinding.activitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList);
+                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList,DatabaseAddresses.getAttractionsCollection());
                 mDataBinding.activitiesRecyclerView.setAdapter(adaptor);
             }
 

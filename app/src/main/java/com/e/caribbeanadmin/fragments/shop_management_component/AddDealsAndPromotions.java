@@ -71,7 +71,7 @@ public class AddDealsAndPromotions extends Fragment {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList);
+                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList,DatabaseAddresses.getDealsCollection());
                 recyclerView.setAdapter(adaptor);
             }
 

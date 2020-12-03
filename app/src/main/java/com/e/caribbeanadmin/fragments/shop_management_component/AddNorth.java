@@ -68,7 +68,7 @@ public class AddNorth extends Fragment {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 mDataBinding.addNorthRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList);
+                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList,DatabaseAddresses.getNorthCollection());
                 mDataBinding.addNorthRecyclerView.setAdapter(adaptor);
             }
 

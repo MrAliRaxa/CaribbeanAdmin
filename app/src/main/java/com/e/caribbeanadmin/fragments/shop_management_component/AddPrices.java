@@ -68,7 +68,7 @@ public class AddPrices extends Fragment {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 mDataBinding.addPricesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mDataBinding.addPricesRecyclerView.setAdapter(new DealsAdaptor(getContext(),itemList));
+                mDataBinding.addPricesRecyclerView.setAdapter(new DealsAdaptor(getContext(),itemList,DatabaseAddresses.getShopPricesCollection()));
             }
 
             @Override

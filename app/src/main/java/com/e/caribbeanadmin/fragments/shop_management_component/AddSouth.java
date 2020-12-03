@@ -70,7 +70,7 @@ public class AddSouth extends Fragment {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 mDataBinding.addSouthRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList);
+                DealsAdaptor adaptor=new DealsAdaptor(getContext(),itemList,DatabaseAddresses.getSouthCollection());
                 mDataBinding.addSouthRecyclerView.setAdapter(adaptor);
             }
 

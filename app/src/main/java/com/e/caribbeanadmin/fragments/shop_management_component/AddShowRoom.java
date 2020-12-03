@@ -70,7 +70,7 @@ public class AddShowRoom extends Fragment {
             @Override
             public void onItemLoaded(List<Item> itemList) {
                 mDataBinding.showroomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mDataBinding.showroomRecyclerView.setAdapter(new DealsAdaptor(getContext(),itemList));
+                mDataBinding.showroomRecyclerView.setAdapter(new DealsAdaptor(getContext(),itemList,DatabaseAddresses.getShopShowroomCollection()));
             }
 
             @Override
