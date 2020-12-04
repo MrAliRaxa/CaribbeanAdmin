@@ -69,6 +69,7 @@
                             android:id="@+id/addLocationLat"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:inputType="number"
                             android:hint="Lat"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             />
@@ -82,6 +83,7 @@
                             android:id="@+id/addLocationLng"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:inputType="number"
                             android:hint="Lng"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             />

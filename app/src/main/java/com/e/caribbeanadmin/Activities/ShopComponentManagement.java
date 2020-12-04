@@ -5,10 +5,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.e.caribbeanadmin.Constants.ShopType;
+import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
 import com.e.caribbeanadmin.Listeners.OnCategoryLoadListeners;
 import com.e.caribbeanadmin.R;
 import com.e.caribbeanadmin.Repository.Repository;
@@ -36,6 +38,7 @@ import com.e.caribbeanadmin.fragments.shop_management_component.AddTobago;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddWebsite;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddWest;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddWildLife;
+import com.e.caribbeanadmin.fragments.shop_management_component.LocationManagement;
 
 public class ShopComponentManagement extends AppCompatActivity {
 
@@ -68,8 +71,8 @@ public class ShopComponentManagement extends AppCompatActivity {
                         replaceFragment(addMenu);
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        AddLocations locations=new AddLocations();
-                        replaceFragment(locations);
+
+                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -99,8 +102,8 @@ public class ShopComponentManagement extends AppCompatActivity {
                         }
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        AddLocations locations=new AddLocations();
-                        replaceFragment(locations);
+                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -131,8 +134,8 @@ public class ShopComponentManagement extends AppCompatActivity {
                         }
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        AddLocations locations=new AddLocations();
-                        replaceFragment(locations);
+                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -197,8 +200,8 @@ public class ShopComponentManagement extends AppCompatActivity {
                         }
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        AddLocations locations=new AddLocations();
-                        replaceFragment(locations);
+                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+
                     });
 
                 } else if(shopCategoryModel.getViewType()== ShopType.DDSI){
