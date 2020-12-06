@@ -58,7 +58,7 @@ public class LocationAdaptor extends RecyclerView.Adapter<LocationAdaptor.ViewHo
             @Override
             public void onClick(View v) {
                 if(onLocationDeleteListeners!=null)
-                onLocationDeleteListeners.onClick();
+                onLocationDeleteListeners.onClick(shopLocation,position);
             }
         });
 
@@ -66,7 +66,7 @@ public class LocationAdaptor extends RecyclerView.Adapter<LocationAdaptor.ViewHo
             @Override
             public void onClick(View v) {
                 if(onLocationEditListeners!=null)
-                onLocationEditListeners.onClick();
+                onLocationEditListeners.onClick(shopLocation);
             }
         });
 

@@ -1,6 +1,10 @@
 package com.e.caribbeanadmin.data_model;
 
-public class ShopLocation {
+import android.graphics.Paint;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ShopLocation implements Parcelable {
     private String id;
     private String shopId;
     private String imageUrl;
@@ -12,6 +16,28 @@ public class ShopLocation {
     public ShopLocation() {
     }
 
+
+    protected ShopLocation(Parcel in) {
+        id = in.readString();
+        shopId = in.readString();
+        imageUrl = in.readString();
+        name = in.readString();
+        shopAddress = in.readString();
+        lat = in.readDouble();
+        lng = in.readDouble();
+    }
+
+    public static final Creator<ShopLocation> CREATOR = new Creator<ShopLocation>() {
+        @Override
+        public ShopLocation createFromParcel(Parcel in) {
+            return new ShopLocation(in);
+        }
+
+        @Override
+        public ShopLocation[] newArray(int size) {
+            return new ShopLocation[size];
+        }
+    };
 
     public String getShopAddress() {
         return shopAddress;
@@ -67,5 +93,21 @@ public class ShopLocation {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(shopId);
+        dest.writeString(imageUrl);
+        dest.writeString(name);
+        dest.writeString(shopAddress);
+        dest.writeDouble(lat);
+        dest.writeDouble(lng);
     }
 }

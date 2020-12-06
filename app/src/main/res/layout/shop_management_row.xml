@@ -68,6 +68,7 @@
                         android:layout_weight=".5"
                         android:layout_margin="5dp"
                         android:text="Edit"
+                        android:visibility="gone"
                         />
                     <Button
                         android:id="@+id/shop_delete"

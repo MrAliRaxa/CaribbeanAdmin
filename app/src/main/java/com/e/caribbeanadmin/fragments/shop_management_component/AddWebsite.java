@@ -84,6 +84,7 @@ public class AddWebsite extends Fragment {
                                 @Override
                                 public void onTaskSuccess() {
                                     Toast.makeText(getContext(), "Website Added", Toast.LENGTH_SHORT).show();
+                                    mDataBinding.websiteUrl.setText(web.getText().toString());
                                     dialog.dismiss();
                                 }
 

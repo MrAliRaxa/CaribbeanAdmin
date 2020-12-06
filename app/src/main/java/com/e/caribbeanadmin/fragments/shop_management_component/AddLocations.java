@@ -1,5 +1,6 @@
 package com.e.caribbeanadmin.fragments.shop_management_component;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.e.caribbeanadmin.FireStorageController.FireStoreUploader;
 import com.e.caribbeanadmin.Listeners.OnFileUploadListeners;
 import com.e.caribbeanadmin.Listeners.OnTaskCompleteListeners;
 import com.e.caribbeanadmin.R;
+import com.e.caribbeanadmin.Util.DialogBuilder;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.data_model.ShopLocation;
 import com.e.caribbeanadmin.databinding.FragmentAddLocationsBinding;
@@ -50,6 +52,7 @@ public class AddLocations extends Fragment {
 
         if(getArguments()!=null){
             shop=getArguments().getParcelable("shop");
+
         }
     }
 
@@ -58,6 +61,7 @@ public class AddLocations extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mDataBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_locations, container, false);
+
 
         mDataBinding.addLocationsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +75,7 @@ public class AddLocations extends Fragment {
         mDataBinding.addLocationPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog progressDialog= DialogBuilder.getSimpleLoadingDialog(getContext(),"Loading","Uploading location");
 
                 if(imageUri==null){
                     Toasty.error(getContext(), "Location Image Not Selected ", Toast.LENGTH_SHORT, true).show();
@@ -85,6 +90,7 @@ public class AddLocations extends Fragment {
                 }else if(mDataBinding.addLocationAddress.getText().toString().isEmpty()){
                     mDataBinding.addLocationAddress.setError("Empty Not allowed");
                 }else{
+                    progressDialog.show();
                     ShopLocation shopLocation=new ShopLocation();
                     shopLocation.setId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                     shopLocation.setShopId(shop.getId());
@@ -104,12 +110,16 @@ public class AddLocations extends Fragment {
                                         public void onTaskSuccess() {
                                            // MotionToast.Companion.createToast(getActivity(),"Success",,MotionToast.TOAST_SUCCESS,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
                                             Toasty.success(getContext(), "Shop Location Added", Toast.LENGTH_SHORT, true).show();
+                                            progressDialog.dismiss();
+                                            getActivity().getSupportFragmentManager().popBackStack();
                                         }
 
                                         @Override
                                         public void onTaskFail(String e) {
                                            // MotionToast.Companion.createToast(getActivity(),"Error",e,MotionToast.TOAST_ERROR,MotionToast.GRAVITY_BOTTOM,MotionToast.LONG_DURATION,ResourcesCompat.getFont(getContext(),R.font.helvetica_regular));
                                             Toasty.error(getContext(), "Error "+e, Toast.LENGTH_SHORT, true).show();
+                                            progressDialog.dismiss();
+                                            getActivity().getSupportFragmentManager().popBackStack();
 
                                         }
                                     });

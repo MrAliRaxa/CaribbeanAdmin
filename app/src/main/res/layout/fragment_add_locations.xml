@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="shopLocation"
+            type="com.e.caribbeanadmin.data_model.ShopLocation" />
+    </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -41,6 +47,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:hint="Location Name"
+                        android:text="@{shopLocation.name}"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -52,6 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:hint="Location Address"
+                        android:text="@{shopLocation.shopAddress}"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -69,8 +77,9 @@
                             android:id="@+id/addLocationLat"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:hint="Lat"
+                            android:text="@{shopLocation.lat+``}"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -83,8 +92,9 @@
                             android:id="@+id/addLocationLng"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:hint="Lng"
+                            android:text="@{shopLocation.lng+``}"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -96,7 +106,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Publish Menu"
+                    android:text="Publish"
                     android:backgroundTint="@android:color/holo_red_dark"
                     android:id="@+id/addLocation_publish"
                     />

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.shop_management_component.EditShopLocation"
+        android:background="@color/white"
+        android:focusable="true"
+        android:clickable="true"
+        >
+
+        <include
+            android:id="@+id/addLocation_editShop"
+            layout="@layout/fragment_add_locations"/>
+    </FrameLayout>
+</layout>

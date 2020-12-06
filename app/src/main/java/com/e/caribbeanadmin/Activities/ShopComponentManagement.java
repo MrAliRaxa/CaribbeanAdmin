@@ -17,6 +17,7 @@ import com.e.caribbeanadmin.Repository.Repository;
 import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.data_model.ShopCategoryModel;
 import com.e.caribbeanadmin.databinding.ActivityShopComponentManagementBinding;
+import com.e.caribbeanadmin.fragments.shop_management_component.ATMLocationManagement;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddATMLocation;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddActivities;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddAttractions;
@@ -38,6 +39,7 @@ import com.e.caribbeanadmin.fragments.shop_management_component.AddTobago;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddWebsite;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddWest;
 import com.e.caribbeanadmin.fragments.shop_management_component.AddWildLife;
+import com.e.caribbeanadmin.fragments.shop_management_component.BankLocationManagement;
 import com.e.caribbeanadmin.fragments.shop_management_component.LocationManagement;
 
 public class ShopComponentManagement extends AppCompatActivity {
@@ -72,7 +74,7 @@ public class ShopComponentManagement extends AppCompatActivity {
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
 
-                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+                        replaceFragment(new LocationManagement());
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -102,7 +104,7 @@ public class ShopComponentManagement extends AppCompatActivity {
                         }
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+                        replaceFragment(new LocationManagement());
 
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +136,7 @@ public class ShopComponentManagement extends AppCompatActivity {
                         }
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+                        replaceFragment(new LocationManagement());
 
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +176,7 @@ public class ShopComponentManagement extends AppCompatActivity {
                     mDataBinding.addAtmLocations.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            replaceFragment(new AddATMLocation());
+                            replaceFragment(new ATMLocationManagement());
                         }
                     });
                     mDataBinding.addInformation.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +188,7 @@ public class ShopComponentManagement extends AppCompatActivity {
                     mDataBinding.addBankLocations.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            replaceFragment(new AddBankLocations());
+                            replaceFragment(new BankLocationManagement());
                         }
                     });
                 }else if(shopCategoryModel.getViewType()== ShopType.SL){
@@ -200,7 +202,7 @@ public class ShopComponentManagement extends AppCompatActivity {
                         }
                     });
                     mDataBinding.addLocations.setOnClickListener(v->{
-                        replaceFragment(new LocationManagement(DatabaseAddresses.getShopLocationCollection()));
+                        replaceFragment(new LocationManagement());
 
                     });
 

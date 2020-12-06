@@ -16,6 +16,7 @@ public class Shop implements Parcelable {
     private String id;
 
     public Shop() {
+
     }
 
 

@@ -2,6 +2,7 @@ package com.e.caribbeanadmin.fragments.shop_management_component;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.e.caribbeanadmin.Adaptor.LocationAdaptor;
 import com.e.caribbeanadmin.DatabaseController.DatabaseAddresses;
+import com.e.caribbeanadmin.Listeners.OnLocationDeleteListeners;
+import com.e.caribbeanadmin.Listeners.OnLocationEditListeners;
 import com.e.caribbeanadmin.Listeners.OnShopClick;
 import com.e.caribbeanadmin.Listeners.OnShopLocationLoadListeners;
 import com.e.caribbeanadmin.R;
@@ -20,19 +23,20 @@ import com.e.caribbeanadmin.data_model.Shop;
 import com.e.caribbeanadmin.data_model.ShopLocation;
 import com.e.caribbeanadmin.databinding.FragmentLocationManagementBinding;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class LocationManagement extends Fragment {
 
 
     private Shop shop;
-    private CollectionReference reference;
-    public LocationManagement(CollectionReference collectionReference) {
-        reference=collectionReference;
-        // Required empty public constructor
+
+    public LocationManagement() {
     }
 
 
@@ -68,12 +72,28 @@ public class LocationManagement extends Fragment {
             public void onLocationsLoaded(List<ShopLocation> locationList) {
                 mDataBinding.locationManagementRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 LocationAdaptor locationAdaptor=new LocationAdaptor(getContext(),locationList);
-                locationAdaptor.setOnShopClick(new OnShopClick() {
+                locationAdaptor.setOnLocationEditListeners(new OnLocationEditListeners() {
                     @Override
-                    public void onClick(LatLng pos, int index) {
-
+                    public void onClick(ShopLocation location) {
+                        replaceFragment(new EditShopLocation(),location,shop);
                     }
                 });
+                locationAdaptor.setOnLocationDeleteListeners(new OnLocationDeleteListeners() {
+                    @Override
+                    public void onClick(ShopLocation shopLocation,int index) {
+                        DatabaseAddresses.getShopLocationCollection().document(shopLocation.getId()).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toasty.success(getContext(),"Location Removed ").show();
+                                        locationList.remove(index);
+                                        locationAdaptor.notifyItemRangeRemoved(index,locationList.size());
+                                        locationAdaptor.notifyItemRemoved(index);
+                                    }
+                                });
+                    }
+                });
+
                 mDataBinding.locationManagementRecyclerView.setAdapter(locationAdaptor);
             }
 
@@ -89,5 +109,14 @@ public class LocationManagement extends Fragment {
             }
         });
         return mDataBinding.getRoot();
+    }
+
+    private void replaceFragment(Fragment fragment,ShopLocation shopLocation,Shop s){
+        Bundle bundle=new Bundle();
+        bundle.putParcelable("shop",s);
+        bundle.putParcelable("location",shopLocation);
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.shopContainer,fragment).addToBackStack(null)
+                .commit();
     }
 }

@@ -130,6 +130,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     android:layout_marginBottom="@dimen/_10sdp"
+                    android:visibility="gone"
                     />
 
 

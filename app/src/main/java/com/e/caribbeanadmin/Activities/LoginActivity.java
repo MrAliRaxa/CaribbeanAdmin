@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.e.caribbeanadmin.Constants.AccountType;
 import com.e.caribbeanadmin.data_model.UserProfile;
 import com.e.caribbeanadmin.Listeners.OnUserProfileLoadListeners;
 import com.e.caribbeanadmin.R;
@@ -22,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+
+import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -50,12 +53,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        activityLoginBinding.signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startSignUpScreen();
-            }
-        });
     }
 
 
@@ -91,9 +88,17 @@ public class LoginActivity extends AppCompatActivity {
                     Repository.getMyProfile(firebaseAuth.getUid(), new OnUserProfileLoadListeners() {
                         @Override
                         public void onUserProfileLoaded(UserProfile userProfile) {
-                            CurrentUser.setUserProfile(userProfile);
-                            progressDialog.dismiss();
-                            startDashboard();
+
+                            if(userProfile.getAccountType()== AccountType.ADMIN){
+                                CurrentUser.setUserProfile(userProfile);
+                                progressDialog.dismiss();
+                                startDashboard();
+                            }else{
+                                Toasty.error(LoginActivity.this,"This account not a admin account").show();
+                                progressDialog.dismiss();
+                                firebaseAuth.signOut();
+                            }
+
                         }
                         @Override
                         public void onFailure(String e) {
